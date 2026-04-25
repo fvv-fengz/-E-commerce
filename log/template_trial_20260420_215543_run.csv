@@ -1,0 +1,29 @@
+﻿日志时间,自运行起秒,账号,页面,阶段,键/标签,动作,结果,是否成功
+2026-04-20 21:55:51,7.460,甑维居家日用,globalAccountLoop,nav,goto,open_url,https://mms.pinduoduo.com/login/,是
+2026-04-20 21:55:51,7.493,甑维居家日用,globalAccountLoop,account,switch,switchAccount,globalAccountLoop：锚点无需 UI 切店（如拼多多：店铺轮次由 pageIds 内登录与业务页完成）,是
+2026-04-20 21:55:51,8.154,甑维居家日用,pdd_login_switch,nav,goto,skip_same_url,https://mms.pinduoduo.com/login/,是
+2026-04-20 21:55:53,9.482,甑维居家日用,pdd_login_switch,interaction,pdd_login_tab_account,click,"Locator.scroll_into_view_if_needed: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,9.625,甑维居家日用,pdd_login_switch,interaction,pdd_input_username_current_account,input,"Locator.wait_for: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,9.767,甑维居家日用,pdd_login_switch,interaction,pdd_click_login_submit,click,"Locator.scroll_into_view_if_needed: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,9.873,甑维居家日用,pdd_aftersale_export,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,9.979,甑维居家日用,pdd_trade_data_operation,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,10.112,甑维居家日用,pdd_promotion_overview,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,10.221,甑维居家日用,pdd_cashier_bills_reconcile,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:53,10.233,根少家的小铺83,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.245,胡小涛小店87,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.257,聂小霞的铺子84,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.269,彬彬家的网店18,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.282,阿顺的小店铺2256,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.293,胡家的商铺1632,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.305,小胡的网店3621,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.317,彬少家的小铺7543,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.328,丁家的店铺1382,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.339,俊少家的小铺1692,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.351,甑维饰界供应链,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.363,饰界发饰屋,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.375,甑维鞋业,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.387,许小鹏的网店2647,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.399,小许的铺子9906,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.410,臻选百货超市40,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.421,丁哥家的店23,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否
+2026-04-20 21:55:54,10.432,丁小华的小店铺2500,globalAccountLoop,nav,goto,open_url,"打开失败（已重试 2 次，间隔 1500ms）: Page.goto: Target page, context or browser has been closed",否

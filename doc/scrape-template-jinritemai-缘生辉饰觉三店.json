@@ -1,0 +1,558 @@
+{
+  "templateVersion": 1,
+  "name": "抖店生态多页采集（小缘·熠熠生辉·饰觉 三店）",
+  "runOutputSubdir": "",
+  "aggregateExcelAutoCompassMetrics": true,
+  "compassMetricsOutputPath": "店铺罗盘千川指标表_{run_ts}.xlsx",
+  "notes": [
+    "本模板店铺参数从 doc/jinritemai-accounts.json 的 profiles.v1_three 读取，便于与 v1_main 共用同一参数文件。",
+    "运行：python scripts/run_template_trial.py --template doc/scrape-template-jinritemai-缘生辉饰觉三店.json",
+    "选择器来自 Chrome Copy selector，含大量 nth-child 与哈希类名（如 -J7jCZG、style_*__3rYw_），发版或菜单增删后易失效；稳定后可改为短选择器、文案、getByRole。",
+    "三个子域需分别登录；运行层需携带对应 Cookie。",
+    "日期策略「前一天」指业务日还是自然日，请在实现时与页面控件行为对齐（含时区）。",
+    "抖店左侧栏依赖 nth-child(4)/(8)：账号权限、菜单折叠、新增菜单项都会导致序号变化，运行前建议在目标账号上回归点一次。",
+    "globalAccountLoop：填 accounts 或命令行 --global-accounts 后，每家店先抖店首页切店，再按 pageIds 顺序跑各页 interactions+fields；这些 page id 在下方 pages 里仍会跳过重复执行，除非从 pageIds 中移除。",
+    "globalAccountLoop.accounts 可为字符串数组，或 { name, shopId, 千川ID } 对象数组；脚本用 name 在抖店首页切店。若模板中任一条配置了非空「千川ID」（或 qianchuanId），则启用千川按 ID 切户：有 ID 的店在千川页用该 ID 切换；未配千川 ID 的店跳过千川导航/切户，Excel 对应指标写为字符串 None。若无人配置千川 ID，则千川仍按店铺名切换（兼容旧模板）。",
+    "分块验证切店：python scripts/run_template_trial.py --only-account-switch（仅用 globalAccountLoop 的 URL+切店配置+accounts，不跑 pageIds）。",
+    "资金账单页点「生成报表」并在 popover 内「确定」后常跳转 fxg-bill/history-report，故「资金账单」与「历史报表下载」拆成两页；`fxg_aftersale_fund_detail_bill` 使用直达 URL `/ffa/fxg-bill/fund-detail-bill`（当前标签页 goto，不经售后侧栏）。售后订单导出另页 fxg_aftersale_order_list_export，避免跳转后后续点击失效。",
+    "多店只测售后导出：python scripts/run_template_trial.py --global-accounts 店A,店B --page-ids fxg_aftersale_order_list_export（仍走首页 preSwitchUrl 切店，仅执行该页）；店名与 globalAccountLoop.accounts 一致或 CLI 覆盖。全量多店：不配 --page-ids，按 pageIds 顺序含账单→历史→售后等。",
+    "历史报表「首条下载」分块单测（建议纳入日常调试/回归）：scripts/run_bill_history_download_test.py（或 .bat），模板 doc/scrape-template-fxg-bill-history-download-test.json；须与 pages 里 fxg_bill_history_report 的 export 一步保持同步。奏效原因：全量流程要先跑资金账单生成、长等待与多页顺序，为调 XPath/角色/下载超时往往要等整段；单测只执行该页并默认压低页末 post-interaction 空等，迭代从「几分钟一轮」缩到「几十秒一轮」；仍走同一 CDP 登录态与 run_template_trial 引擎，行为与全量一致，不是另一套假环境；小模板验证通过后再改主模板，减少对其它页的连带风险。",
+    "pageIds 顺序：首条为 fxg_mshop_home（切店后 goto https://compass.jinritemai.com/shop，再顶栏日期筛选后抽指标区；不再经抖店顶栏点进罗盘）；切店仍在 globalAccountLoop.preSwitchUrl 抖店首页完成。其后资金账单→历史报表→售后导出→千川。",
+    "运行流程（逐步人话：A～F、含千川 F1a 关推广弹窗）见 doc/抖店生态试运行-运行流程.md；与本文 notes、pages[].description 需同步维护。",
+    "千川页 qianchuan_home_cost_roi：切户（loginShopList 或 fallback 顶部搜索）后常出现推广/活动类弹窗或蒙层；与流程文档 F1a 对应。本页 dismissBlockingOverlaysBeforeFields 默认 true：在 dateRange 与 extract fields 之前脚本会尝试关闭此类遮挡，避免挡日期与指标；仍失败时可人工关闭后重跑或加大等待。",
+    "千川自动重试（run_template_trial）：仅当模板中至少一条账户配置了千川 ID（启用 ID 策略）且当前店铺有非空千川 ID 时，若整页失败或三个成本指标未全部写入有效数据，可重试；额外次数由 pages[].qianchuanRetryExtra 指定（默认 0 不重试）、间隔见脚本 _QIANCHUAN_RETRY_WAIT_MS；未配置千川 ID 的店仍整页跳过写 None。",
+    "命令行 --global-accounts / --page-ids / --checkpoint 等不改变单店内 pageIds 顺序，仅影响跑哪些店、哪些页；断点续跑须与同一模板意图一致。",
+    "run_template_trial：--selector-hints-file（默认 log/field_selector_hints.json）按「模板文件名::pageId::fieldKey::店铺名」记录上次 extract 成功的选择器（每家店独立优先级），下次运行插入候选链最前；--no-selector-hints 禁用。与 alternateFieldSelector 叠加时，记忆优先于模板内顺序。",
+    "pages[].fieldLocatorTimeoutMs：与命令行 --field-locator-timeout-ms 取较小者，作为本页单字段 wait_for 上限；罗盘等页可设 12000 避免单字段 attached+visible 各 30s 顶满。",
+    "千川 qianchuan_home_cost_roi：appendAavidToQianchuanUrl 为 true 时，globalAccountLoop 下用当前店千川 ID 写入 query「aavid=」再 goto；落地页为 uni-prom（投放管理），dr 使用模板占位 {yday}%2C{yday}（运行时替换为「昨天」单日）；forceReloadOnOpen 避免同路径 skip_same_url 导致日期未刷新。指标抽取若仍用原 /home 成本卡 CSS 会不匹配，请改为 networkResponseCapture 或更新 fields。"
+  ],
+  "datePolicyDefault": "previousCalendarDay",
+  "globalAccountLoop": {
+    "accounts": [],
+    "accountsConfigFile": "doc/douyin-account-packs/v1_three.json",
+    "accountsProfile": "default",
+    "preSwitchUrl": "https://fxg.jinritemai.com/ffa/mshop/homepage/index",
+    "anchorPageId": "fxg_mshop_home",
+    "accountSwitcher": {
+      "mode": "fxgShopModal",
+      "headerMenuHoverSelector": [
+        "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+        "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+      ],
+      "headerMenuTriggerSelector": [
+        "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+        "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+      ],
+      "openSwitchModalSelector": [
+        "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+        "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+      ],
+      "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+      "switchMenuText": "切换组织/店铺",
+      "modalTitleContains": "请选择店铺",
+      "menuOpenSelectors": [
+        "[class*='header'] [class*='avatar']",
+        "header img"
+      ]
+    },
+    "pageIds": [
+      "fxg_mshop_home",
+      "fxg_aftersale_fund_detail_bill",
+      "fxg_bill_history_report",
+      "fxg_aftersale_order_list_export",
+      "qianchuan_home_cost_roi"
+    ]
+  },
+  "pages": [
+    {
+      "id": "fxg_mshop_home",
+      "url": "https://compass.jinritemai.com/shop",
+      "postGotoWaitMs": 1500,
+      "preFieldExtractWaitMs": 2000,
+      "fieldLocatorTimeoutMs": 12000,
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "fxgShopModal",
+        "headerMenuHoverSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+        ],
+        "headerMenuTriggerSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+        ],
+        "openSwitchModalSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+        ],
+        "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+        "switchMenuText": "切换组织/店铺",
+        "modalTitleContains": "请选择店铺",
+        "menuOpenSelectors": [
+          "[class*='header'] [class*='avatar']",
+          "header img",
+          "[class*='user-info']"
+        ]
+      },
+      "kind": "detail",
+      "description": "多店流程中在 preSwitchUrl 切店后，本页直接 goto 抖音电商罗盘·店铺（compass.jinritemai.com/shop），不点击昨日/近1天，直接抓取经营概况容器整块文本（含用户支付金额、客单价、成交订单数等），后处理再解析指标。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": -2,
+          "type": "click",
+          "key": "fxg_home_close_desktop_ad",
+          "continueOnFail": true,
+          "waitVisibleTimeoutMs": 3500,
+          "postClickWaitMs": 200,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "div.auxo-modal-wrap button.auxo-modal-close"
+          },
+          "alternateClickSelector": [
+            "div.auxo-modal-wrap .auxo-modal-close-x",
+            "div.auxo-modal-wrap button:has-text('关闭')",
+            "div.auxo-modal-wrap button:has-text('我知道了')",
+            "div.auxo-modal-wrap button:has-text('暂不')",
+            "div.auxo-modal-wrap button:has-text('跳过')",
+            "div.auxo-drawer button:has-text('关闭')",
+            "div[role='dialog'] button:has-text('关闭')",
+            "div[role='dialog'] .auxo-modal-close-x"
+          ],
+          "comment": "首页可能出现桌面广告/运营提醒弹窗；若出现先尝试关闭，不出现则继续。"
+        }
+      ],
+      "fields": [
+        {
+          "key": "home_metrics_blob",
+          "label": "经营概况整块文本",
+          "selector": "#root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",
+          "alternateFieldSelector": [
+            "#homepage-sub-app-provider div[class*='coreContent'] div[class*='businessDataWrap'] > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)"
+          ],
+          "multiple": false,
+          "extract": {
+            "type": "text"
+          },
+          "comment": "三合一抓取：直接读取经营概况容器全部可见文本，避免按单指标分别定位三次。"
+        }
+      ]
+    },
+    {
+      "id": "qianchuan_home_cost_roi",
+      "url": "https://qianchuan.jinritemai.com/uni-prom?ct=1&dr={yday}%2C{yday}&uni=%7B%22uniTab%22%3A%22ad%22%7D",
+      "appendAavidToQianchuanUrl": true,
+      "skipPostGotoAccountSwitch": true,
+      "forceReloadOnOpen": true,
+      "qianchuanRetryExtra": 0,
+      "postGotoWaitMs": 2000,
+      "preFieldExtractWaitMs": 1500,
+      "dismissBlockingOverlaysBeforeFields": true,
+      "softFailPage": true,
+      "softFailPlaceholder": "none",
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "loginShopList",
+        "shopListContainerSelector": "body > div.container > div.right > div.account-selector > div.byted-infinite-scroll.account-infinite.fix-scroll > div > div.account-list-container > div > div",
+        "shopListContainerSelectors": [
+          "body > div.container > div.right > div.account-selector div.account-list-container > div > div",
+          "div.account-selector div.account-list-container > div > div"
+        ],
+        "shopListScrollSelector": "body > div.container > div.right > div.account-selector > div.byted-infinite-scroll.account-infinite.fix-scroll",
+        "shopListWaitTimeoutMs": 17500,
+        "afterClickWaitMs": 2500,
+        "fallbackToSearchOverlay": true,
+        "searchPlaceholder": "请输入账户名称或完整ID",
+        "openSelectors": [
+          "#app header span:has-text('ID:')",
+          "header [class*='account']"
+        ]
+      },
+      "kind": "detail",
+      "description": "巨量千川 uni-prom：goto 后先点引导选「推商品」，再从 data-overview 三块卡片取数；extract.firstNumberOnly 取主数字。dr、aavid 逻辑同前。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 1,
+          "type": "click",
+          "key": "uni_prom_pick_push_product",
+          "continueOnFail": true,
+          "postClickWaitMs": 1200,
+          "waitVisibleTimeoutMs": 15000,
+          "target": {
+            "selector": "#new_uni_prom_shop_guidance > div > span > span"
+          },
+          "alternateClickSelector": [
+            "#new_uni_prom_shop_guidance span:has-text('推商品')"
+          ],
+          "comment": "选「推商品」模式；若无引导层则 continueOnFail 跳过"
+        }
+      ],
+      "fields": [
+        {
+          "key": "stat_cost_for_roi2",
+          "label": "整体消耗(元)",
+          "selector": "#app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",
+          "alternateFieldSelector": [
+            "#app-container div.data-overview-wrapper div.card.stat_cost_for_roi2 div[class*='oc-statistic-block']",
+            "#app-container div.card.stat_cost_for_roi2 div.oc-statistic"
+          ],
+          "multiple": false,
+          "extract": {
+            "type": "text",
+            "firstNumberOnly": true
+          },
+          "comment": "推商品下整体消耗；firstNumberOnly 取主数字"
+        },
+        {
+          "key": "total_prepay_and_pay_settle_roi2_1h",
+          "label": "净成交ROI",
+          "selector": "#app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",
+          "alternateFieldSelector": [
+            "#app-container div.data-overview-wrapper div.card.total_prepay_and_pay_order_roi2 div[class*='oc-statistic-block']"
+          ],
+          "multiple": false,
+          "extract": {
+            "type": "text",
+            "firstNumberOnly": true
+          },
+          "comment": "DOM total_prepay_and_pay_order_roi2；键名沿用与后处理一致"
+        },
+        {
+          "key": "total_order_settle_count_for_roi2_1h",
+          "label": "净成交订单数",
+          "selector": "#app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",
+          "alternateFieldSelector": [
+            "#app-container div.data-overview-wrapper div.card.total_pay_order_count_for_roi2 div[class*='oc-statistic-block']"
+          ],
+          "multiple": false,
+          "extract": {
+            "type": "text",
+            "firstNumberOnly": true
+          },
+          "comment": "DOM total_pay_order_count_for_roi2；键名沿用汇总表映射"
+        }
+      ]
+    },
+    {
+      "id": "fxg_aftersale_fund_detail_bill",
+      "url": "https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill",
+      "postGotoWaitMs": 1000,
+      "preSwitchUrl": "",
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "fxgShopModal",
+        "headerMenuHoverSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+        ],
+        "headerMenuTriggerSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+        ],
+        "openSwitchModalSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+        ],
+        "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+        "switchMenuText": "切换组织/店铺",
+        "modalTitleContains": "请选择店铺",
+        "menuOpenSelectors": [
+          "[class*='header'] [class*='avatar']",
+          "header img"
+        ]
+      },
+      "kind": "detail",
+      "description": "抖店资金账单：当前标签页直达 `/ffa/fxg-bill/fund-detail-bill`（账单管理），无需售后侧栏点击。随后选日期、生成报表、popover 确定。确定步 `postClickWaitMs` 可为 0（仅去掉脚本固定睡眠，与是否出现弹层无关）。确认后常跳转 history-report，下载在下一页 fxg_bill_history_report。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 0,
+          "type": "dateRange",
+          "key": "fund_detail_date_range",
+          "continueOnFail": true,
+          "dateRangeStrategy": "auxoCalendarPick",
+          "target": {
+            "selector": "#rc-tabs-0-panel-FUND_DETAIL_BILL form .auxo-picker.auxo-picker-range",
+            "calendarPanelSelector": "div.auxo-picker-panel-container"
+          },
+          "datePolicy": "previousCalendarDay",
+          "comment": "主选择器用「面板+form+auxo-picker-range」短链，减少 nth-child 失效；旧版超长 CSS 见仓库历史或 run_template_trial 内 _auxo_fund_detail_calendar_container_chain 降级。点开范围后在 auxo 月历按「昨天」翻页并点对应 td；双 panel 左起右止各点一次。#rc-tabs-0 随 Tab 顺序变化时需改 id。"
+        },
+        {
+          "order": 1,
+          "type": "click",
+          "key": "fund_detail_click_generate_report",
+          "postClickWaitMs": 600,
+          "target": {
+            "selector": "#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button"
+          },
+          "comment": "生成报表（非 export key，不触发下载）；随后弹出确认层"
+        },
+        {
+          "order": 2,
+          "type": "click",
+          "key": "confirm_fund_detail_generate",
+          "postClickWaitMs": 0,
+          "target": {
+            "selector": "div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm"
+          },
+          "alternateClickSelector": "div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary",
+          "comment": "popover 确定；postClickWaitMs 置 0 表示不在此步额外睡眠（原 5000 仅为脚本等待，与弹层是否出现无关）。若跳转过快可改大或依赖下一页 postGotoWaitMs"
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "fxg_bill_history_report",
+      "url": "https://fxg.jinritemai.com/ffa/fxg-bill/history-report",
+      "postGotoWaitMs": 1000,
+      "preSwitchUrl": "",
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "fxgShopModal",
+        "headerMenuHoverSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+        ],
+        "headerMenuTriggerSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+        ],
+        "openSwitchModalSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+        ],
+        "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+        "switchMenuText": "切换组织/店铺",
+        "modalTitleContains": "请选择店铺",
+        "menuOpenSelectors": [
+          "[class*='header'] [class*='avatar']",
+          "header img"
+        ]
+      },
+      "kind": "detail",
+      "description": "历史报表列表多行结构相同。「第一条」= 第一个报表容器（列表中第一个 li/首条），只点该容器内的「下载」。生成中：preExport… 轮询并在超时后刷新等待下载控件。导出失败：exportFailRetryWaitMs 后 page.reload 再试；exportFailAttemptMax=2（首次 + 刷新后一次）。仍失败则 continueOnFail 跳过本步，不中断后续页面。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 1,
+          "type": "click",
+          "key": "export_bill_history_top",
+          "continueOnFail": true,
+          "matchIndex": 0,
+          "preExportReadyTimeoutMs": 45000,
+          "preExportRefreshMax": 5,
+          "preExportReloadWaitMs": 1200,
+          "preExportPollIntervalMs": 1500,
+          "exportFailRetryWaitMs": 10000,
+          "exportFailAttemptMax": 2,
+          "waitVisibleTimeoutMs": 15000,
+          "expectDownloadTimeoutMs": 60000,
+          "target": {
+            "selector": "xpath=//*[@id=\"root\"]/div/div/div/div[3]/div/li[1]/div/div[2]/button"
+          },
+          "alternateClickSelector": [
+            "xpath=//*[@id=\"root\"]/div/div/div/div[3]/div/li[1]/div/div[2]/a",
+            "xpath=//*[@id=\"root\"]/div/div/div/div[3]/div/li[1]/div/div[2]/a",
+            "xpath=//*[@id=\"root\"]/div/div/div/div[3]/div/li[1]/div/div[2]/button",
+            "xpath=//*[@id=\"root\"]/div/div/div/div[3]/div/li[1]//button",
+            "#root > div > div > div > div:nth-child(3) > div > li:nth-child(1) > div > div.download-vN9GL1 > button",
+            "#root > div > div > div > div:nth-child(3) > div > li:nth-child(1) > div > div[class*='download-'] > button",
+            "#root > div > div > div > div:nth-child(3) > div > li:first-child div[class*='download-'] > button",
+            "#root li:nth-child(1) button",
+            "#root li:first-child button",
+            "#root ul li:first-child button"
+          ],
+          "getByRoleFallback": [
+            {
+              "role": "button",
+              "name": "下载",
+              "rowScope": "#root li",
+              "rowIndex": 0
+            },
+            {
+              "role": "link",
+              "name": "下载",
+              "rowScope": "#root li",
+              "rowIndex": 0
+            }
+          ],
+          "comment": "首条=第一个 li 内下载。失败后刷新再试至多 2 轮；仍失败 continueOnFail 跳过本步。"
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "fxg_aftersale_order_list_export",
+      "url": "https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list",
+      "postGotoWaitMs": 1200,
+      "preSwitchUrl": "",
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "fxgShopModal",
+        "headerMenuHoverSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+        ],
+        "headerMenuTriggerSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+        ],
+        "openSwitchModalSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+        ],
+        "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+        "switchMenuText": "切换组织/店铺",
+        "modalTitleContains": "请选择店铺",
+        "menuOpenSelectors": [
+          "[class*='header'] [class*='avatar']",
+          "header img"
+        ]
+      },
+      "kind": "detail",
+      "description": "售后单列表：由本页 url 直达 https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list（脚本 goto），不再依赖侧栏点击；随后退款成功 + 发货物流（买家已签收）+ 时间类型切换为完结时间 + 昨日快捷 + footer 查询 + 导出。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 2,
+          "type": "click",
+          "key": "aftersale_expand_search_footer",
+          "postClickWaitMs": 400,
+          "waitVisibleTimeoutMs": 17500,
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text']"
+          },
+          "alternateClickSelector": [
+            "#root div[class*='searchForm'] div[class*='footer'] button[class*='aurora-btn-text']",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_footer__PvqkY > button:nth-child(3)",
+            "#orderAppContainer div[class*='styles_searchForm'] div[class*='styles_footer'] > button:nth-child(3)",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_footer__PvqkY > button:nth-child(6) > span:nth-child(1)",
+            "#orderAppContainer div[class*='styles_searchForm'] div[class*='styles_footer'] > button:nth-child(6) > span:nth-child(1)",
+            "#root div[class*='searchForm'] div[class*='footer'] button.aurora-btn > span",
+            "#root div[class*='searchForm'] > div[class*='footer'] > button.aurora-btn > span",
+            "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-text.aurora-btn-color-default.aurora-btn-variant-text > span"
+          ],
+          "comment": "折叠 footer 展开：#root 与 orderAppContainer 并存；orderAppContainer footer 可点第 3 个 button 或第 6 个 button 内 span；styles_* 哈希变时用对应 class* 行"
+        },
+        {
+          "order": 3,
+          "type": "selectFilter",
+          "key": "refund_success",
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.auxo-row > div:nth-child(5) > div > div.sections-guOvW5 > div > div > div.fieldWrapper-Sj8sG0 > div > div > div > span.auxo-select-selection-item"
+          },
+          "alternateSelectFilterSelector": [
+            "#root div[class*='searchForm'] div.auxo-row > div:nth-child(5) span.auxo-select-selection-item",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.auxo-row > div:nth-child(5)"
+          ],
+          "value": "退款成功",
+          "comment": "新版 #root 售后状态下拉；哈希类名变时靠 class* 与旧版 orderAppContainer 兜底"
+        },
+        {
+          "order": 4,
+          "type": "selectFilter",
+          "key": "shipping_logistics_buyer_signed",
+          "target": {
+            "selector": "#root div[class*='searchForm'] div[class*='foldable'] > div > div:nth-child(5) span.auxo-select-selection-item"
+          },
+          "alternateSelectFilterSelector": [
+            "#root div[class*='searchForm'] div[class*='foldable'] div:nth-child(5) .auxo-select-selection-item",
+            "#root div[class*='searchForm'] div[class*='foldable'] div:nth-child(5) .auxo-select .auxo-select-selector",
+            "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.foldable-OwdcbV > div > div:nth-child(5) > div > div.sections-guOvW5 > div > div > div.fieldWrapper-Sj8sG0 > div > div > div > span.auxo-select-selection-item",
+            "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.foldable-OwdcbV > div > div:nth-child(5) > div > div.sections-guOvW5 > div > div > div.fieldWrapper-Sj8sG0 > div > div > div",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_foldable__LXCpY > div > div:nth-child(5) > div > div.styles_sections__THSrI > div > div > div.styles_fieldWrapper__RzqQ9 > div > div > div > span.auxo-select-selection-item",
+            "#orderAppContainer div[class*='styles_searchForm'] div[class*='foldable'] div:nth-child(5) span.auxo-select-selection-item",
+            "#orderAppContainer div[class*='styles_foldable'] div:nth-child(5) span.auxo-select-selection-item"
+          ],
+          "value": "买家已签收",
+          "comment": "发货物流（售后工作台以 #root 为主）：先 class* 折叠区第 5 列；再哈希全路径；旧版 orderAppContainer 兜底。nth-child(5) 随表单列数变化时需 DevTools 更新。"
+        },
+        {
+          "order": 5,
+          "type": "selectFilter",
+          "key": "aftersale_time_type_completion",
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.foldable-OwdcbV > div > div.auxo-col.auxo-col-16 > div > div.sections-guOvW5 > div:nth-child(1) > div > div > div > span > div.auxo-select.auxo-select-borderless.auxo-select-single.auxo-select-show-arrow > div"
+          },
+          "alternateSelectFilterSelector": [
+            "#root div[class*='searchForm'] div[class*='foldable'] div.auxo-col.auxo-col-16 div[class*='sections'] > div:nth-child(1) .auxo-select-borderless div.auxo-select-selector",
+            "#root div[class*='foldable'] div.auxo-col-16 div[class*='sections'] > div:nth-child(1) span.auxo-select-selection-item",
+            "#orderAppContainer div[class*='foldable'] div.auxo-col.auxo-col-16 div[class*='sections'] > div:nth-child(1) .auxo-select .auxo-select-selector"
+          ],
+          "value": "完结时间",
+          "comment": "时间维度下拉：默认「申请时间」，改为「完结时间」后再选「昨日」；首列为 borderless auxo-select（用户 DevTools 路径）。"
+        },
+        {
+          "order": 6,
+          "type": "selectFilter",
+          "key": "aftersale_time_yesterday",
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.foldable-OwdcbV > div > div.auxo-col.auxo-col-16 > div > div.sections-guOvW5 > div.sectionWrapper-KcG3dR.normalSectionWrapper-zJ0b48.borderless-O3AQKU > div > div > div > span > div > div"
+          },
+          "alternateSelectFilterSelector": [
+            "#orderAppContainer > div > div[class*='styles_searchForm'] > div[class*='foldable'] > div > div.auxo-col.auxo-col-16 > div > div[class*='sections'] > div[class*='sectionWrapper'] > div > div > div > span > div > div",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_foldable__LXCpY > div > div.auxo-col.auxo-col-16 > div > div.styles_sections__THSrI > div.styles_sectionWrapper__VK1B1.styles_normalSectionWrapper__zqxsQ.styles_borderless__sM1zE > div > div > div > span > div > div",
+            "#orderAppContainer div[class*='styles_searchForm'] div[class*='foldable'] div.auxo-col.auxo-col-16 .auxo-select .auxo-select-selector",
+            "#orderAppContainer div[class*='foldable'] div.auxo-col.auxo-col-16 span.auxo-select-selection-item",
+            "#orderAppContainer div[class*='foldable'] div.auxo-col.auxo-col-16 input.auxo-select-selection-search-input[id^=rc_select_]",
+            "#rc_select_16",
+            "#root div[class*='searchForm'] div[class*='foldable'] div.auxo-col.auxo-col-16 div[class*='sections'] div[class*='sectionWrapper'] > div > div > div > span > div > div"
+          ],
+          "value": "昨日",
+          "comment": "折叠区 auxo-col-16：第二段为日期/「昨日」快捷 rc-select（非申请时间那一列）；先 class* 稳定链再哈希全路径；脚本互试「昨天/昨日」"
+        },
+        {
+          "order": 7,
+          "type": "click",
+          "key": "aftersale_footer_query",
+          "postClickWaitMs": 1000,
+          "waitVisibleTimeoutMs": 17500,
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled"
+          },
+          "alternateClickSelector": [
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_footer__PvqkY > button.auxo-btn.auxo-btn-dashed.auxo-btn-sm",
+            "#orderAppContainer div[class*='styles_searchForm'] div[class*='styles_footer'] button.auxo-btn-dashed.auxo-btn-sm",
+            "#root div[class*='searchForm'] > div[class*='footer'] > button.aurora-btn-secondary.aurora-btn-variant-filled"
+          ],
+          "comment": "footer 查询：#root aurora secondary；orderAppContainer 下 dashed+sm（用户确认）；哈希变时 class* 兜底"
+        },
+        {
+          "order": 8,
+          "type": "click",
+          "key": "export_aftersale_orders",
+          "bindsFields": [
+            "export_aftersale_orders"
+          ],
+          "continueOnFail": true,
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-default.aurora-btn-color-default.aurora-btn-variant-tertiary.aurora-btn-icon-end.exportBtn-aKFegn"
+          },
+          "alternateClickSelector": [
+            "#root div[class*='searchForm'] > div[class*='footer'] > button[class*='exportBtn']",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_footer__PvqkY > button:nth-child(6)"
+          ],
+          "comment": "导出售后单；key 含 export 触发 expect_download；#root exportBtn 失败时试 orderAppContainer footer 第 6 个 button。continueOnFail：导出失败仍记日志并进入下一页（千川等）。"
+        }
+      ],
+      "fields": []
+    }
+  ]
+}

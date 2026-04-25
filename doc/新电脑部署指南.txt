@@ -1,0 +1,195 @@
+================================================================================
+  fff-dianshang 电商采集 — 首次完整部署手册（Windows）
+================================================================================
+
+本手册面向「从零把项目拷到另一台电脑并能跑控制台 + 采集」的全过程。
+你已使用 conda 环境名：douyin-compass，推荐使用「方式 A：conda 离线包」。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+第一部分：发包电脑上要做什么（你只需要做一次打包）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+〔前提〕已安装 Miniconda/Anaconda。「命令提示符（cmd）」「Anaconda Prompt」「PowerShell」
+  任选其一即可。
+
+  【最省事 · 不推荐折腾 conda init】双击运行：
+      scripts\进入douyin环节.cmd
+  会打开一个新的 cmd，已激活 douyin-compass 并进入项目根目录。
+  若提示找不到 activate.bat，用记事本编辑该 cmd，把里面的 CONDA_ROOT= 改成你的 Anaconda 路径。
+
+  【可选 · 让「conda activate」在任意终端可用】在本机执行一次（建议用完整路径，避免命中错误的 conda.bat）：
+    "D:\ProgramData\Anaconda3\Scripts\conda.exe" init cmd.exe
+    "D:\ProgramData\Anaconda3\Scripts\conda.exe" init powershell
+  路径按你安装位置修改；执行后关掉终端再打开。
+
+  【不用 init 时】也可每次手动一行（路径改为你的安装目录）：
+    "D:\ProgramData\Anaconda3\Scripts\activate.bat" douyin-compass
+
+〔步骤 1〕进入项目根目录
+  假设项目在：
+    D:\Program Files (x86)\fff-dianshang
+  cmd 示例：
+    cd /d "D:\Program Files (x86)\fff-dianshang"
+  PowerShell 示例：
+    cd "D:\Program Files (x86)\fff-dianshang"
+
+〔步骤 2〕激活 conda 环境 douyin-compass
+    conda activate douyin-compass
+  若提示没有这个环境：
+    conda env create -f environment.yml
+    conda activate douyin-compass
+  （若你平时就在用这个环境开发，一般只需 activate 即可。）
+
+〔步骤 3〕把 Playwright 浏览器装进「环境目录」里（便于打进离线包）
+  说明：默认浏览器装在用户目录，conda-pack 带不走；本脚本把浏览器装到环境内的
+        playwright-browsers，体积会变大，属于正常现象。
+    powershell -ExecutionPolicy Bypass -File .\scripts\prep_conda_env_for_pack.ps1
+  若报错「找不到 conda」，请先安装/初始化 conda，并确认已 activate douyin-compass。
+  说明：prep 脚本不调用 conda run，可直接在旧版 conda 上运行（使用 envs\douyin-compass\python.exe）。
+
+〔步骤 4〕用 conda-pack 把整个环境打成压缩包
+  说明：会先确保 base 里装有 conda-pack；生成的文件在项目根目录：
+        conda_env_bundle.tar.gz（可能几百 MB～1GB+，视依赖与浏览器而定）
+    powershell -ExecutionPolicy Bypass -File .\scripts\pack_conda_env.ps1
+  默认打包的环境名就是 douyin-compass；若你临时要用别的环境：
+    powershell -ExecutionPolicy Bypass -File .\scripts\pack_conda_env.ps1 -EnvName "其它名"
+
+〔步骤 5〕把「项目文件 + conda 包」打成一个大 zip
+    powershell -ExecutionPolicy Bypass -File .\scripts\export_project_bundle.ps1
+  默认输出在「桌面」：fff-dianshang_bundle_日期时间.zip
+  说明：
+    - 脚本会自动排除 .venv、conda_env、output、log、dailydate、.git 等，减小体积；
+    - 若项目根目录已有 conda_env_bundle.tar.gz，会一并打进 zip；
+    - 若 conda 包在别的盘，可指定：
+        .\scripts\export_project_bundle.ps1 -CondaArchivePath "D:\路径\conda_env_bundle.tar.gz"
+
+〔步骤 6〕检查 zip 里是否包含两处关键内容
+  解压 zip 自查一次（不必发给对方）：
+    - 应有「整个项目源码与 doc、app\config_registry 等」；
+    - 应有 conda_env_bundle.tar.gz（方式 A 必备）。
+  若没有 conda 包，对方就只能走「方式 B」或你重新执行步骤 3～5。
+
+〔步骤 7〕把 zip 拷给对方
+  U 盘、网盘、内网共享均可；含店铺账号的文件请勿用不安全渠道外传。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+第二部分：收包电脑上要做什么（对方第一次部署）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+〔对方环境要求〕
+  - Windows 10 或 11（64 位）
+  - 不需要安装 Python（方式 A 已自带解释器）
+  - 不需要安装 conda（方式 A）
+  - 必须安装 Google Chrome（用于登录抖店/拼多多/千川；采集通过远程调试连接 Chrome）
+  - 解压路径建议：英文路径、不要太深，例如 D:\work\fff-dianshang
+
+〔步骤 1〕解压 zip
+  右键「全部解压」到上述目录。确认能看到：
+    scripts\
+    doc\
+    app\
+    conda_env_bundle.tar.gz   ← 若走方式 A，必须有
+
+〔步骤 2〕若 Windows 提示「已阻止」脚本
+  对解压出的 .ps1 可右键 → 属性 → 勾选「解除锁定」（若有）。
+  或以管理员身份打开 PowerShell（一般不需要管理员）。
+
+〔步骤 3〕解压 conda 离线环境（方式 A 核心步骤）
+  终端用 cmd 或 PowerShell 均可。先 cd 到项目根目录（cmd 用 cd /d "路径"）。
+  下列命令会从当前目录调用 PowerShell 执行脚本（在 cmd 里粘贴同样有效）：
+    powershell -ExecutionPolicy Bypass -File .\scripts\unpack_conda_env.ps1
+  也可：资源管理器地址栏输入 cmd 回车，再 cd /d 到项目根后执行上一行。
+  成功后会生成文件夹：
+    conda_env\
+  内含 python.exe、Scripts 等；脚本会尝试运行 conda-unpack 修正路径。
+  若报错：
+    - 确认 conda_env_bundle.tar.gz 与 unpack 脚本在同一项目结构下（应在项目根目录）；
+    - 确认 Windows 自带 tar（Win10 一般可用）。
+  若解压后没有 conda_env\Scripts\python.exe（多为以前残缺目录与 tar 合并导致）：
+    - 删掉整个 conda_env 文件夹后重试；或手动解压时使用：
+      powershell -ExecutionPolicy Bypass -File .\scripts\unpack_conda_env.ps1 -CleanDest
+  【省事】若根目录已有 conda_env_bundle.tar.gz 但尚未解压：可直接双击「一键启动.bat」，
+    脚本会先运行 ensure_python_env.ps1，在缺少 conda_env 时自动解压 tar.gz（首次可能较久）。
+
+〔步骤 4〕启动采集控制台（推荐一键）
+  在项目根目录双击：
+    一键启动.bat
+  会依次：检查/准备 Python 环境（含自动解压 conda 包）→ 启动 CDP Chrome（端口 9222）→ 打开 Streamlit（端口 8502）。
+  若只需单独启动：
+    scripts\start_streamlit_console.bat    （仅控制台）
+    scripts\start_chrome_cdp_test.bat      （仅 Chrome CDP，带说明与 pause）
+  说明：
+    - 若存在 conda_env，会优先用里面的 Python，不会再去建 .venv；
+    - 脚本会设置 PLAYWRIGHT_BROWSERS_PATH 指向 conda_env\playwright-browsers。
+  浏览器应自动打开 http://127.0.0.1:8502 ；若没有，请手动在浏览器地址栏输入：
+    http://127.0.0.1:8502
+
+〔步骤 5〕启动 Chrome 远程调试（采集前必须）
+  采集脚本通过 CDP 连接本机 Chrome，默认地址为 http://127.0.0.1:9222 。
+  项目中示例：
+    scripts\start_chrome_cdp_test.bat
+  按提示操作：尽量先关掉其它 Chrome 窗口，再用该脚本启动专用 Chrome，
+  在打开的窗口里登录抖店/罗盘/千川等（按你任务需要）。
+  控制台里此前已去掉 CDP 输入框时，默认仍指向 9222；若你改了端口，需在代码或配置里一致。
+
+〔步骤 6〕在控制台里选择任务并运行
+  简要顺序（与界面一致）：
+    选择运行配置 → 勾选模块 / 账号与数据集 → 输出路径 →「开始运行」。
+  详细功能以你当前 Streamlit 页面为准。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+第三部分：若没有 conda_env_bundle.tar.gz（方式 B：仅用官方 Python）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+适用：zip 里没带 conda 包，或对方愿意自己装 Python。
+
+  1. 安装 Python 3.10+，安装时勾选「Add Python to PATH」。
+  2. 在项目根目录（cmd 或 PowerShell 均可）执行：
+       powershell -ExecutionPolicy Bypass -File .\scripts\install_local.ps1
+     会创建 .venv 并 pip 安装依赖，且执行 playwright install chromium（需联网）。
+  3. 双击 scripts\start_streamlit_console.bat（此时走 .venv）。
+  4. 同样必须按「第二部分」步骤 5 启动 Chrome CDP。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+第四部分：配置与敏感数据清单（迁移时核对）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+请确认这些随项目一起存在（路径相对项目根）：
+
+  app\config_registry\builtin_configs.json    — 内置任务
+  app\config_registry\clients.json              — 客户登记
+  app\config_registry\task_user_datasets.json   — 控制台「用户数据集」（若用过）
+  doc\scrape-template-*.json                    — 采集模板
+  doc\douyin-account-packs\*.json               — 抖店账号分包（若用）
+  doc\pdd_店铺账号信息*.csv                      — 拼多多店铺表（若用）
+
+勿通过不可信渠道发送含密码、Cookie、店铺账号的文件。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+第五部分：常见问题
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q：双击 bat 闪退？
+A：在 cmd 里 cd 到项目根，运行 scripts\start_streamlit_console.bat，看黑色窗口里的报错。
+
+Q：streamlit 报错找不到模块？
+A：方式 A 检查是否执行过 unpack_conda_env.ps1，且 conda_env 存在；方式 B 检查是否执行 install_local.ps1。
+
+Q：采集连不上浏览器？
+A：必须用 CDP 方式启动的 Chrome；端口与控制台一致（默认 9222）；防火墙一般不影响本机回环。
+
+Q：Excel 出现多份「_已写入_时间戳」？
+A：多为汇总表被 Excel/WPS 打开占用，脚本改写到备用文件名；关闭表格后重跑。
+
+Q：conda 解压后 python 报 DLL 缺失？
+A：重新在项目根运行 unpack_conda_env.ps1，确保 conda-unpack 执行成功；不要把 conda_env 放到移动硬盘根路径异常位置。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+版本说明：文档随仓库更新；环境名默认 douyin-compass，与 environment.yml 一致。
+================================================================================

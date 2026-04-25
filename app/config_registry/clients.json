@@ -1,0 +1,20 @@
+[
+  {
+    "id": "",
+    "name": "未指定客户",
+    "slug": "",
+    "note": "交付包文件名等可按需手写备注"
+  },
+  {
+    "id": "demo_retail",
+    "name": "演示-零售客户",
+    "slug": "零售A",
+    "note": "示例：可在上传配置或 clients.json 中增删"
+  },
+  {
+    "id": "demo_wholesale",
+    "name": "演示-批发客户",
+    "slug": "批发B",
+    "note": ""
+  }
+]

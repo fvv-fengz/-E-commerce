@@ -1,0 +1,9 @@
+{
+  "chrome": {
+    "attach_to_existing_chrome": true,
+    "cdp_port": 9222
+  },
+  "ui": {
+    "window_always_on_top": true
+  }
+}

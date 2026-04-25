@@ -1,0 +1,269 @@
+[
+  {
+    "id": "pdd_default",
+    "name": "拼多多数据提取",
+    "pdd_credential_csv": "doc/pdd_店铺账号信息.csv",
+    "template": "doc/scrape-template-pdd-拼多多数据提取_1.json",
+    "module_page_ids": [
+      "pdd_login_switch",
+      "pdd_trade_data_operation",
+      "pdd_promotion_overview",
+      "pdd_aftersale_export",
+      "pdd_cashier_bills_reconcile"
+    ],
+    "default_page_ids": [
+      "pdd_login_switch",
+      "pdd_trade_data_operation",
+      "pdd_promotion_overview",
+      "pdd_aftersale_export",
+      "pdd_cashier_bills_reconcile"
+    ],
+    "default_trial_args": [
+      "--package-dailydate-at-end"
+    ],
+    "postprocess": {
+      "enabled": true,
+      "command": [
+        "python",
+        "scripts/process_pdd_data.py",
+        "all",
+        "--input-dir",
+        "{download_dir}"
+      ],
+      "result_hint": "拼多多后处理结果默认写入 dailydate（可在命令参数调整）。"
+    },
+    "client_deliverable": {
+      "enabled": true,
+      "result_hint": "控制台：试运行→后处理→客户交付打包至项目根 dailydate/（与抖店同级约定）；试运行阶段不会重复注入 --package-dailydate-at-end。纯命令行仅跑采集脚本时仍可由 default_trial_args 在试运成功结束时打包。",
+      "command": [
+        "python",
+        "scripts/package_dailydate_deliverable.py",
+        "--scraped-excel",
+        "{excel_out}",
+        "--download-dir",
+        "{download_dir}",
+        "--dailydate-root",
+        "{project_root}/dailydate",
+        "--run-ts",
+        "{run_ts}",
+        "--run-day",
+        "{run_day}",
+        "--yday",
+        "{yday}",
+        "--template",
+        "{template_path}",
+        "--task-name",
+        "{task_display_name}",
+        "--task-slug",
+        "{task_slug}",
+        "--auto-compass-if-template"
+      ]
+    },
+    "presets": [
+      {
+        "id": "pdd_all",
+        "label": "拼多多 · 全模块",
+        "run_scope": "all",
+        "help": "登录 + 经营 + 推广 + 售后导出 + 资金账单"
+      },
+      {
+        "id": "pdd_preset_default_scope",
+        "label": "拼多多 · 默认精简",
+        "run_scope": "default",
+        "help": "与 default_page_ids 一致，可在配置中改"
+      },
+      {
+        "id": "pdd_aftersale_cashier",
+        "label": "拼多多 · 仅售后+资金",
+        "run_scope": "explicit",
+        "page_ids": [
+          "pdd_login_switch",
+          "pdd_aftersale_export",
+          "pdd_cashier_bills_reconcile"
+        ],
+        "help": "适合只跑导出与对账"
+      }
+    ],
+    "dynamic_params": [
+      {
+        "id": "global_accounts",
+        "label": "店铺列表(逗号分隔，可选)",
+        "type": "text",
+        "default": "",
+        "help": "会追加到 run_template_trial: --global-accounts",
+        "cli": {
+          "target": "trial",
+          "flag": "--global-accounts"
+        }
+      },
+      {
+        "id": "interaction_timeout_ms",
+        "label": "交互超时(ms)",
+        "type": "number",
+        "default": 30000,
+        "cli": {
+          "target": "trial",
+          "flag": "--interaction-timeout-ms"
+        }
+      },
+      {
+        "id": "recursive",
+        "label": "后处理递归扫描子目录",
+        "type": "bool",
+        "default": true,
+        "cli": {
+          "target": "postprocess",
+          "flag": "--recursive",
+          "mode": "store_true"
+        }
+      },
+      {
+        "id": "reference_date",
+        "label": "后处理参考日期(YYYY-MM-DD，可选)",
+        "type": "text",
+        "default": "",
+        "cli": {
+          "target": "postprocess",
+          "flag": "--reference-date"
+        }
+      }
+    ]
+  },
+  {
+    "id": "douyin_default",
+    "name": "抖店数据提取",
+    "jinritemai_account_pack": "doc/douyin-account-packs/v1_main.json",
+    "template": "doc/scrape-template-jinritemai-v1.json",
+    "module_page_ids": [
+      "fxg_login_switch",
+      "fxg_mshop_home",
+      "fxg_aftersale_fund_detail_bill",
+      "fxg_bill_history_report",
+      "fxg_aftersale_order_list_export",
+      "qianchuan_home_cost_roi"
+    ],
+    "default_page_ids": [
+      "fxg_login_switch",
+      "fxg_mshop_home",
+      "qianchuan_home_cost_roi"
+    ],
+    "default_trial_args": [
+      "--package-dailydate-at-end"
+    ],
+    "postprocess": {
+      "enabled": true,
+      "command": [
+        "python",
+        "scripts/postprocess_home_blob_metrics.py",
+        "--excel",
+        "{excel_out}"
+      ],
+      "result_hint": "抖店后处理默认另存为同目录下「运行日_抖音店铺指标.xlsx」；控制台「客户交付」会打包该加工表（非试运行原始表）。"
+    },
+    "client_deliverable": {
+      "enabled": true,
+      "result_hint": "客户交付包在项目根目录 dailydate/ 下：文件夹名含运行日与任务标识；内含采集表副本、网页导出压缩包、README 说明。控制台：试运行→后处理→本步骤打包（不会与试运行末尾重复打包）。仅命令行跑 run_template_trial 时抖店内置配置会带 default_trial_args（试运成功结束时写 dailydate）。",
+      "command": [
+        "python",
+        "scripts/package_dailydate_deliverable.py",
+        "--scraped-excel",
+        "{excel_out}",
+        "--download-dir",
+        "{download_dir}",
+        "--dailydate-root",
+        "{project_root}/dailydate",
+        "--run-ts",
+        "{run_ts}",
+        "--run-day",
+        "{run_day}",
+        "--yday",
+        "{yday}",
+        "--template",
+        "{template_path}",
+        "--task-name",
+        "{task_display_name}",
+        "--task-slug",
+        "{task_slug}",
+        "--auto-compass-if-template"
+      ]
+    },
+    "presets": [
+      {
+        "id": "douyin_all",
+        "label": "抖店 · 全店全流程（账单/历史/售后/千川）",
+        "run_scope": "all",
+        "help": "全模块按模板 pageIds 顺序；控制台可选 doc/douyin-account-packs 下账号包"
+      },
+      {
+        "id": "douyin_default",
+        "label": "抖店 · 默认精简（罗盘+千川）",
+        "run_scope": "default",
+        "help": "与 default_page_ids 一致；下方「自定义」可多选模块"
+      },
+      {
+        "id": "douyin_compass_qc",
+        "label": "抖店 · 仅罗盘首页+千川",
+        "run_scope": "explicit",
+        "page_ids": [
+          "fxg_login_switch",
+          "fxg_mshop_home",
+          "qianchuan_home_cost_roi"
+        ],
+        "help": "不切账单导出时的快速抽检"
+      },
+      {
+        "id": "douyin_aftersale_export",
+        "label": "抖店 · 仅售后订单导出",
+        "run_scope": "explicit",
+        "page_ids": [
+          "fxg_login_switch",
+          "fxg_aftersale_order_list_export"
+        ],
+        "help": "多店只跑售后导出时常用"
+      }
+    ],
+    "dynamic_params": [
+      {
+        "id": "global_accounts",
+        "label": "店铺列表(逗号分隔，可选)",
+        "type": "text",
+        "default": "",
+        "cli": {
+          "target": "trial",
+          "flag": "--global-accounts"
+        }
+      },
+      {
+        "id": "field_locator_timeout_ms",
+        "label": "字段抽取超时(ms)",
+        "type": "number",
+        "default": 30000,
+        "cli": {
+          "target": "trial",
+          "flag": "--field-locator-timeout-ms"
+        }
+      },
+      {
+        "id": "post_interaction_wait_ms",
+        "label": "交互后等待(ms)",
+        "type": "number",
+        "default": 2500,
+        "cli": {
+          "target": "trial",
+          "flag": "--post-interaction-wait-ms"
+        }
+      },
+      {
+        "id": "kanban_out",
+        "label": "后处理输出Excel(可选)",
+        "type": "text",
+        "default": "",
+        "help": "会追加到 postprocess: --out <path>",
+        "cli": {
+          "target": "postprocess",
+          "flag": "--out"
+        }
+      }
+    ]
+  }
+]

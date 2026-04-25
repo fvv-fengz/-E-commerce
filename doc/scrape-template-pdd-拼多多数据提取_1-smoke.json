@@ -1,0 +1,37 @@
+{
+  "templateVersion": 1,
+  "name": "拼多多数据提取_1_smoke",
+  "notes": [
+    "冒烟模板：仅验证页面可达、选择器可提取。",
+    "用于快速迭代选择器，不建议直接用于生产全量采集。"
+  ],
+  "datePolicyDefault": "previousCalendarDay",
+  "pages": [
+    {
+      "id": "pdd_smoke_home",
+      "url": "https://mms.pinduoduo.com/",
+      "postGotoWaitMs": 800,
+      "preFieldExtractWaitMs": 800,
+      "fieldLocatorTimeoutMs": 5000,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "拼多多主页冒烟验证。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [],
+      "fields": [
+        {
+          "key": "pdd_smoke_title",
+          "label": "页面标题",
+          "selector": "title",
+          "multiple": false,
+          "extract": {
+            "type": "text"
+          }
+        }
+      ]
+    }
+  ]
+}

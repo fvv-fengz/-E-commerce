@@ -1,0 +1,678 @@
+{
+  "templateVersion": 1,
+  "name": "拼多多数据提取_1",
+  "runOutputSubdir": "pdd_extract_{run_ts}",
+  "aggregateExcelFileStem": "拼多多数值提取",
+  "aggregateExcelLayout": "wideByShop",
+  "aggregateExcelMetricColumns": [
+    { "key": "pdd_trade_amount", "label": "成交金额" },
+    { "key": "pdd_trade_order_count", "label": "成交订单数" },
+    { "key": "pdd_trade_avg_order_value", "label": "客单价" },
+    { "key": "pdd_cost_spend", "label": "成本花费(元)" },
+    { "key": "pdd_net_actual_roi", "label": "净实际投产比" },
+    { "key": "pdd_cost_per_net_order", "label": "每笔净成交花费(元)" }
+  ],
+  "accountCredentialsFile": "doc/pdd-account-packs/pdd-accounts.json",
+  "accountCredentialProfile": "pdd_default",
+  "downloadRunSubdirTemplate": "{task_name}_{run_date}",
+  "notes": [
+    "切换账号分组：拼多多账号统一维护于 doc/pdd-account-packs/pdd-accounts.json（profiles.pdd_default / profiles.pdd_test_users）；测试模板 scrape-template-pdd-拼多多数据提取_测试用户组.json 使用 profile pdd_test_users（8 店，产出子目录 pdd_extract_test_users_{run_ts}）。控制台内置「拼多多 · 测试用户组」(pdd_test_users)。临时覆盖仍可设顶层 accountCredentialCsv（优先于 JSON）。",
+    "产出目录（与抖店模板一致）：模板根 runOutputSubdir=pdd_extract_{run_ts}，每次试运行在 output/pdd_extract_<YYYYMMDD_HHMMSS>/ 下隔离；默认不使用 downloadRoot 时，浏览器下载落在 output/<runOutputSubdir>/<downloadRunSubdirTemplate>/（与汇总 Excel 同级目录下，不再套 downloads/）。汇总表在同一 runOutputSubdir 根下「拼多多数值提取_<运行日当天YYYYMMDD>.xlsx」。占位符支持 {run_ts}/{run_id}/{run_day}/{yday}。命令行若显式 --download-dir / --excel-out 则仍以命令行为准（覆盖默认）。若控制台把采集目录填成非默认的 output/downloads（例如 output/crawl/…），下载文件落在所填路径，汇总表仍默认写在 output/pdd_extract_<run_ts>/（除非另指定 excel-out）。",
+    "客户交付 dailydate：内置控制台配置含 default_trial_args（--package-dailydate-at-end）与完整流程末尾的 package_dailydate_deliverable（与抖店同类）；控制台为「试运行→后处理 process_pdd_data→客户交付」，试运行阶段不重复注入打包参数。纯命令行仅跑 run_template_trial 且成功结束时也可写 dailydate；拼多多后处理默认仍写项目根 dailydate/ 下各 xlsx（见 postprocess 脚本说明）。",
+    "拼多多任务与抖音模板分离：本模板仅用于 PDD，不复用抖音页面与切店逻辑。",
+    "模块 A（登录切号）流程：登录页 -> 账号登录 Tab -> 填当前店铺主账号 -> 点击登录。",
+    "模块 B（交易数据）：进入 stores_data/operation；拦截 queryMallTradeList 响应（列表内对象含 payOrdrAmt/payOrdrCnt/payOrdrAup 等数值字段）；勿用 getMallTradeInfo 易被乱码覆盖。整树深度匹配字段名；再不行才用 DOM。",
+    "模块 C（推广概览）：URL 中 beginDate/endDate 使用 {{yday}} 占位，运行时自动替换为昨天日期。",
+    "整店轮次：globalAccountLoop.accountsFromCredentialCsv=true 时，店铺顺序与当前账号源（JSON profile 数组顺序或 CSV 行顺序）一致；每家店按 pageIds 顺序跑完再换下一家（避免按页切号）。",
+    "模块 D（售后单下载）：排在登录后第一位，每家店强制重新进入售后列表页（forceReloadOnOpen）。须将「时间类型」选为「售后申请时间」后再查询 → 下载数据 → 下载查询订单。",
+    "模块 E（对账中心）：同一标签 goto /cashier/finance/payment-bills 下载账单（多店轮次勿新标签，避免与切店顺序打架）。",
+    "当前店铺名与账号映射来自 accountCredentialsFile + accountCredentialProfile（或优先使用的 accountCredentialCsv）。命令行 --global-accounts 可覆盖店铺列表。"
+  ],
+  "datePolicyDefault": "previousCalendarDay",
+  "globalAccountLoop": {
+    "accountsFromCredentialCsv": true,
+    "accounts": [],
+    "preSwitchUrl": "https://mms.pinduoduo.com/login/",
+    "anchorPageId": "pdd_login_switch",
+    "accountSwitcher": {
+      "mode": "noop",
+      "comment": "拼多多无抖店式店铺弹窗；每家店先 goto preSwitchUrl，再按 pageIds 执行（登录页按账号配置填主账号并登录）。"
+    },
+    "pageIds": [
+      "pdd_login_switch",
+      "pdd_aftersale_export",
+      "pdd_trade_data_operation",
+      "pdd_promotion_overview",
+      "pdd_cashier_bills_reconcile"
+    ]
+  },
+  "pages": [
+    {
+      "id": "pdd_login_switch",
+      "url": "https://mms.pinduoduo.com/login/",
+      "postGotoWaitMs": 1000,
+      "preFieldExtractWaitMs": 0,
+      "fieldLocatorTimeoutMs": 5000,
+      "skipAccountSwitch": true,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "模块A：拼多多登录切号。进入登录页后切到账号登录，填入当前轮次店铺主账号并点击登录。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 0,
+          "type": "click",
+          "key": "pdd_login_tab_account",
+          "waitVisibleTimeoutMs": 15000,
+          "postClickWaitMs": 500,
+          "target": {
+            "selector": "#root > div.pdd-app-skeleton > div > div > main > div > section.login-content > div > div > div > div.login-tab > div > div > div:nth-child(2)"
+          },
+          "alternateClickSelector": [
+            "div.login-tab div:has-text('账号登录')"
+          ]
+        },
+        {
+          "order": 1,
+          "type": "input",
+          "key": "pdd_input_username_current_account",
+          "waitVisibleTimeoutMs": 15000,
+          "postInputWaitMs": 300,
+          "valueFrom": "account_username",
+          "target": {
+            "selector": "#usernameId"
+          }
+        },
+        {
+          "order": 2,
+          "type": "click",
+          "key": "pdd_click_login_submit",
+          "waitVisibleTimeoutMs": 15000,
+          "postClickWaitMs": 1200,
+          "target": {
+            "selector": "#root > div.pdd-app-skeleton > div > div > main > div > section.login-content > div > div > div > div.password-section > section > div > div > button"
+          },
+          "alternateClickSelector": [
+            "div.password-section button",
+            "button:has-text('登录')"
+          ]
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "pdd_trade_data_operation",
+      "url": "https://mms.pinduoduo.com/sycm/stores_data/operation?dateFlag=0",
+      "postGotoWaitMs": 2800,
+      "preFieldExtractWaitMs": 4500,
+      "fieldLocatorTimeoutMs": 12000,
+      "skipAccountSwitch": true,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "模块B：地区交易数据表：列顺序一般为 省份|成交金额(元)|成交订单数|…|成交客单价(元)|操作。可用 columnIndex（0 起）按列取数；与 columnHeaderMatch 同时配置时优先 columnIndex。成交金额/订单数 sum，客单价 avg。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 0,
+          "type": "scroll",
+          "key": "pdd_trade_scroll_to_bottom_before_page_size",
+          "continueOnFail": true,
+          "scrollWindow": true,
+          "scrollMode": "end",
+          "postScrollWaitMs": 500
+        },
+        {
+          "order": 1,
+          "type": "click",
+          "key": "pdd_trade_table_page_size_open",
+          "continueOnFail": true,
+          "skipScrollIntoView": true,
+          "waitVisibleTimeoutMs": 22000,
+          "postClickWaitMs": 350,
+          "target": {
+            "selector": "#mf-mms-sycm-container div:has-text('每页') div[class*='selection-item']"
+          },
+          "alternateClickSelector": [
+            "#mf-mms-sycm-container span:has-text('每页') + div div[class*='selection-item']",
+            "#mf-mms-sycm-container [class*='pagination'] div[class*='selection-item']",
+            "#mf-mms-sycm-container [class*='pagination'] button",
+            "#mf-mms-sycm-container div[class*='select']:has-text('10')",
+            "#mf-mms-sycm-container div[class*='select']:has-text('条')",
+            "#mf-mms-sycm-container span:has-text('10 条')"
+          ]
+        },
+        {
+          "order": 2,
+          "type": "click",
+          "key": "pdd_trade_table_page_size_50",
+          "continueOnFail": true,
+          "skipScrollIntoView": true,
+          "waitVisibleTimeoutMs": 22000,
+          "postClickWaitMs": 400,
+          "target": {
+            "selector": "div[role='option']:has-text('50')"
+          },
+          "alternateClickSelector": [
+            "li[role='option']:has-text('50')",
+            "[role='option']:has-text('50')",
+            "div[class*='option']:has-text('50')",
+            "span:has-text('50 条')",
+            "span:has-text('50条')",
+            "*:has-text('50 条/页')"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "key": "pdd_trade_amount",
+          "label": "成交金额",
+          "selector": "",
+          "extract": {
+            "type": "tableColumnAgg",
+            "tableSelector": "#mf-mms-sycm-container > div > div > div > div:nth-child(5) > div.TB_outerWrapper_5-158-0.TB_bordered_5-158-0.TB_notTreeStriped_5-158-0 > div.TB_inner_5-158-0.TB_scrollPositionBoth_5-158-0.TB_sticky_5-158-0 > div > div.TB_body_5-158-0 > div > table",
+            "alternateTableSelectors": [
+              "#mf-mms-sycm-container [class*='TB_body'] table",
+              "#mf-mms-sycm-container div[class*='TB_body'] table"
+            ],
+            "paginateAllPages": true,
+            "nextPageSelector": "button:has-text('下一页')",
+            "alternateNextPageSelectors": [
+              "a:has-text('下一页')",
+              "li:has-text('下一页')"
+            ],
+            "postNextPageWaitMs": 900,
+            "maxPages": 50,
+            "columnHeaderMatch": "成交金额",
+            "columnIndex": 1,
+            "aggregate": "sum",
+            "skipIfEmpty": true
+          }
+        },
+        {
+          "key": "pdd_trade_order_count",
+          "label": "成交订单数",
+          "selector": "",
+          "extract": {
+            "type": "tableColumnAgg",
+            "tableSelector": "#mf-mms-sycm-container > div > div > div > div:nth-child(5) > div.TB_outerWrapper_5-158-0.TB_bordered_5-158-0.TB_notTreeStriped_5-158-0 > div.TB_inner_5-158-0.TB_scrollPositionBoth_5-158-0.TB_sticky_5-158-0 > div > div.TB_body_5-158-0 > div > table",
+            "alternateTableSelectors": [
+              "#mf-mms-sycm-container [class*='TB_body'] table",
+              "#mf-mms-sycm-container div[class*='TB_body'] table"
+            ],
+            "paginateAllPages": true,
+            "nextPageSelector": "button:has-text('下一页')",
+            "alternateNextPageSelectors": [
+              "a:has-text('下一页')",
+              "li:has-text('下一页')"
+            ],
+            "postNextPageWaitMs": 900,
+            "maxPages": 50,
+            "columnHeaderMatch": "成交订单数",
+            "columnIndex": 2,
+            "aggregate": "sum",
+            "integerOnly": true,
+            "skipIfEmpty": true
+          }
+        },
+        {
+          "key": "pdd_trade_buyer_count",
+          "label": "成交买家数",
+          "selector": "",
+          "extract": {
+            "type": "tableColumnAgg",
+            "tableSelector": "#mf-mms-sycm-container > div > div > div > div:nth-child(5) > div.TB_outerWrapper_5-158-0.TB_bordered_5-158-0.TB_notTreeStriped_5-158-0 > div.TB_inner_5-158-0.TB_scrollPositionBoth_5-158-0.TB_sticky_5-158-0 > div > div.TB_body_5-158-0 > div > table",
+            "alternateTableSelectors": [
+              "#mf-mms-sycm-container [class*='TB_body'] table",
+              "#mf-mms-sycm-container div[class*='TB_body'] table"
+            ],
+            "paginateAllPages": true,
+            "nextPageSelector": "button:has-text('下一页')",
+            "alternateNextPageSelectors": [
+              "a:has-text('下一页')",
+              "li:has-text('下一页')"
+            ],
+            "postNextPageWaitMs": 900,
+            "maxPages": 50,
+            "columnHeaderMatch": "成交买家数",
+            "columnIndex": 3,
+            "aggregate": "sum",
+            "skipIfEmpty": true
+          }
+        },
+        {
+          "key": "pdd_trade_avg_order_value",
+          "label": "客单价",
+          "selector": "",
+          "extract": {
+            "type": "computedDivide",
+            "numeratorKey": "pdd_trade_amount",
+            "denominatorKey": "pdd_trade_buyer_count",
+            "skipIfEmpty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdd_promotion_overview",
+      "url": "https://yingxiao.pinduoduo.com/goods/report/promotion/overView?beginDate={{yday}}&endDate={{yday}}&msfrom=mms_sidenav",
+      "postGotoWaitMs": 1800,
+      "preFieldExtractWaitMs": 1800,
+      "fieldLocatorTimeoutMs": 12000,
+      "skipAccountSwitch": true,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "模块C：推广概览页，先切到「表格」并取消「对比时间」，锁定表格后，汇总行取表体第一行（totalRowStrategy=firstBodyRow），再按列头取：成本花费(元)、净实际投产比、每笔净成交花费(元)。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 0,
+          "type": "click",
+          "key": "pdd_overview_switch_to_table",
+          "continueOnFail": true,
+          "waitVisibleTimeoutMs": 8000,
+          "postClickWaitMs": 1200,
+          "skipScrollIntoView": true,
+          "comment": "勿用「已选中」单选样式做主选择器，否则会点到「趋势图」导致视图反复切换、页面抖动；明确点「表格」。吸顶区避免 scroll_into_view 与 sticky 反复对齐。",
+          "target": {
+            "selector": "#page-container div[class*='TabRow_radioWrap'] label:has-text('表格')"
+          },
+          "alternateClickSelector": [
+            "#page-container label:has-text('表格')",
+            "div[class*='ReportOverview_wrap'] label:has-text('表格')"
+          ]
+        },
+        {
+          "order": 1,
+          "type": "click",
+          "key": "pdd_overview_uncheck_compare_time",
+          "continueOnFail": true,
+          "waitVisibleTimeoutMs": 5000,
+          "postClickWaitMs": 500,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "#page-container label.anq-checkbox-wrapper-checked:has-text('对比时间')"
+          },
+          "alternateClickSelector": [
+            "#page-container label:has-text('对比时间').anq-checkbox-wrapper-checked",
+            "#page-container label:has-text('对比时间') .anq-checkbox-input"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "key": "pdd_cost_spend",
+          "label": "成本花费(元)",
+          "selector": "",
+          "multiple": false,
+          "extract": {
+            "type": "tableTotalByHeader",
+            "tableSelector": "#page-container > div > div.OverviewInternal_contentWrapper__QeUQR > div > div.ReportOverview_wrap__oJSxK > div:nth-child(2) > div.CardTable_wrap__tKa9y > div > div.anq-table-wrapper.anq-table-has-footer-wrapper > div > div > div > div > div.anq-table-header.anq-table-sticky-holder > table",
+            "alternateTableSelectors": [
+              "#page-container div.CardTable_wrap__tKa9y table",
+              "#page-container div.anq-table-wrapper table"
+            ],
+            "columnHeaderMatch": "成本花费",
+            "columnHeaderMatchAlternates": ["成交花费(元)", "成交花费"],
+            "totalRowStrategy": "firstBodyRow",
+            "firstNumberOnly": true,
+            "skipIfEmpty": true
+          }
+        },
+        {
+          "key": "pdd_net_actual_roi",
+          "label": "净实际投产比",
+          "selector": "",
+          "multiple": false,
+          "extract": {
+            "type": "tableTotalByHeader",
+            "tableSelector": "#page-container > div > div.OverviewInternal_contentWrapper__QeUQR > div > div.ReportOverview_wrap__oJSxK > div:nth-child(2) > div.CardTable_wrap__tKa9y > div > div.anq-table-wrapper.anq-table-has-footer-wrapper > div > div > div > div > div.anq-table-header.anq-table-sticky-holder > table",
+            "alternateTableSelectors": [
+              "#page-container div.CardTable_wrap__tKa9y table",
+              "#page-container div.anq-table-wrapper table"
+            ],
+            "columnHeaderMatch": "净实际投产比",
+            "totalRowStrategy": "firstBodyRow",
+            "firstNumberOnly": true,
+            "skipIfEmpty": true
+          }
+        },
+        {
+          "key": "pdd_cost_per_net_order",
+          "label": "每笔净成交花费(元)",
+          "selector": "",
+          "multiple": false,
+          "extract": {
+            "type": "tableTotalByHeader",
+            "tableSelector": "#page-container > div > div.OverviewInternal_contentWrapper__QeUQR > div > div.ReportOverview_wrap__oJSxK > div:nth-child(2) > div.CardTable_wrap__tKa9y > div > div.anq-table-wrapper.anq-table-has-footer-wrapper > div > div > div > div > div.anq-table-header.anq-table-sticky-holder > table",
+            "alternateTableSelectors": [
+              "#page-container div.CardTable_wrap__tKa9y table",
+              "#page-container div.anq-table-wrapper table"
+            ],
+            "columnHeaderMatch": "每笔净成交花费",
+            "totalRowStrategy": "firstBodyRow",
+            "firstNumberOnly": true,
+            "skipIfEmpty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdd_aftersale_export",
+      "url": "https://mms.pinduoduo.com/print/after-sale-list",
+      "forceReloadOnOpen": true,
+      "postGotoWaitMs": 2800,
+      "preFieldExtractWaitMs": 0,
+      "fieldLocatorTimeoutMs": 10000,
+      "skipAccountSwitch": true,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "模块D：售后单列表。将「时间类型」切换为「售后申请时间」；登录后立刻进入本页并强制 reload；查询 → 下载数据 → 下载查询订单。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": -1,
+          "type": "click",
+          "key": "pdd_close_print_ad_modal",
+          "continueOnFail": true,
+          "waitVisibleTimeoutMs": 3000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "body > div.MDL_outerWrapper_5-174-0.MDL_modal_5-174-0.MDL_showCloseIcon_5-174-0 > div > div > div.MmsUiPosterModal___closeIcon___3pAxJ2-149-0-feature30424-1 > div"
+          },
+          "alternateClickSelector": [
+            "div[class*='MmsUiPosterModal___closeIcon']",
+            "div[class*='MmsUiPosterModal'] div[class*='closeIcon']",
+            "div.MDL_outerWrapper_5-174-0 div[class*='closeIcon']"
+          ],
+          "comment": "广告弹窗关闭（若未出现则忽略并继续）。"
+        },
+        {
+          "order": 0,
+          "type": "selectFilter",
+          "key": "pdd_aftersale_time_type",
+          "waitVisibleTimeoutMs": 16000,
+          "selectOptionClickTimeoutMs": 18000,
+          "target": {
+            "selector": "#timeType > div.Grid_col_5-174-0.Grid_colNotFixed_5-174-0.Form_itemWrapper_5-174-0 > div > div > div > div > div > div > div > div > div > div > div.IPT_inputBlockCell_5-174-0.ST_inputBlockCell_5-174-0"
+          },
+          "alternateSelectFilterSelector": [
+            "#timeType div[class*='IPT_inputBlockCell']",
+            "#timeType div[class*='ST_inputBlockCell']",
+            "#timeType div[class*='Form_itemWrapper'] div[class*='select']",
+            "#timeType [class*='select']"
+          ],
+          "value": "售后申请时间",
+          "comment": "时间类型选「售后申请时间」（左侧文案为「时间类型」）；可选 alternateSelectValues 补充站点实际文案。"
+        },
+        {
+          "order": 1,
+          "type": "click",
+          "key": "pdd_aftersale_query",
+          "waitVisibleTimeoutMs": 12000,
+          "postClickWaitMs": 1200,
+          "target": {
+            "selector": "button:has-text('查询')"
+          }
+        },
+        {
+          "order": 2,
+          "type": "click",
+          "key": "pdd_aftersale_open_download_menu",
+          "waitVisibleTimeoutMs": 16000,
+          "postClickWaitMs": 1200,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "button:has-text('下载数据')"
+          },
+          "alternateClickSelector": [
+            "span:has-text('下载数据')",
+            ".opt-block button > span",
+            ".opt-block button",
+            "[class*='opt-block'] button:has-text('下载')"
+          ],
+          "comment": "先点击下载数据按钮展开下拉菜单。"
+        },
+        {
+          "order": 3,
+          "type": "click",
+          "key": "export_pdd_aftersale_query_orders",
+          "optionalDownload": true,
+          "waitVisibleTimeoutMs": 26000,
+          "expectDownloadTimeoutMs": 90000,
+          "downloadFileNameTemplate": "{account}_售后单_raw_{yday}{ext}",
+          "target": {
+            "selector": "text=下载查询订单"
+          },
+          "alternateClickSelector": [
+            "text=下载查询订单",
+            "[role='menuitem'] >> text=下载查询订单",
+            "div[role='menuitem']:has-text('下载查询订单')",
+            "[role='presentation'] [role='menuitem']:has-text('订单')",
+            "button:has-text('下载查询数据')",
+            "span:has-text('下载查询数据')",
+            "[role='menuitem']:has-text('下载查询数据')",
+            "button:has-text('下载查询订单')",
+            "span:has-text('下载查询订单')",
+            "[role='menuitem']:has-text('下载查询订单')"
+          ],
+          "comment": "下拉项：下载查询订单（或「下载查询数据」见备选）。"
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "pdd_cashier_bills_reconcile",
+      "url": "https://mms.pinduoduo.com/cashier/finance/payment-bills",
+      "postGotoWaitMs": 3500,
+      "preFieldExtractWaitMs": 0,
+      "fieldLocatorTimeoutMs": 10000,
+      "skipAccountSwitch": true,
+      "runAccounts": [],
+      "kind": "detail",
+      "description": "模块E：与前几页同一标签进入对账中心（globalAccountLoop 多店时勿 openInNewTab，否则易与下一家切店/主标签导航重叠）。选时间/账务类型并下载账单。",
+      "scope": {
+        "listRoot": "",
+        "itemRoot": ""
+      },
+      "interactions": [
+        {
+          "order": 0,
+          "type": "click",
+          "key": "pdd_cashier_open_time_filter",
+          "waitVisibleTimeoutMs": 15000,
+          "postClickWaitMs": 400,
+          "target": {
+            "selector": "xpath=//*[@id='root']/div/div[2]/div/div[1]/div/div[3]/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div/div/div/div/div/div[1]/input"
+          },
+          "comment": "点击时间筛选输入框，弹出快捷日期。"
+        },
+        {
+          "order": 1,
+          "type": "click",
+          "key": "pdd_cashier_quick_yesterday",
+          "waitVisibleTimeoutMs": 12000,
+          "postClickWaitMs": 500,
+          "target": {
+            "selector": "div[class*='RPR_quickPickerWrapper'] button:has-text('昨天')"
+          },
+          "alternateClickSelector": [
+            "div[class*='picker-dropdown'] button:has-text('昨天')",
+            "button:has-text('昨天')"
+          ],
+          "comment": "快捷选「昨天」（Portal class 可能随版本变）。"
+        },
+        {
+          "order": 2,
+          "type": "click",
+          "key": "pdd_cashier_expand_advanced",
+          "waitVisibleTimeoutMs": 12000,
+          "postClickWaitMs": 600,
+          "target": {
+            "selector": "a:has-text('展开高级选项')"
+          },
+          "alternateClickSelector": [
+            "#root div[class*='Container_container'] a:has-text('展开高级选项')",
+            "div[class*='btn-group'] a:has-text('展开高级选项')"
+          ],
+          "comment": "展开「账务类型」等高级筛选项。"
+        },
+        {
+          "order": 3,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_技术服务费",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='技术服务费']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='技术服务费']])[1]"
+          ],
+          "comment": "仅在 TAB 账务类型第一列容器内点选；文案以 CBX_textWrapper 内全文精确匹配，避免 span:has-text 子串误点。"
+        },
+        {
+          "order": 4,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_多多进宝",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='多多进宝']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='多多进宝']])[1]"
+          ],
+          "comment": "同上；勿用全页 span:has-text，易点到同名非选项。"
+        },
+        {
+          "order": 5,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_扣款",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='扣款']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='扣款']])[1]"
+          ]
+        },
+        {
+          "order": 6,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_其他服务",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='其他服务']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='其他服务']])[1]"
+          ],
+          "comment": "先于「其他」点；文案精确为「其他服务」四字，与「其他」区分。"
+        },
+        {
+          "order": 7,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_其他",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='其他']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='其他']])[1]"
+          ],
+          "comment": "仅 CBX_textWrapper 全文为「其他」二字；不会匹配「其他服务」。"
+        },
+        {
+          "order": 8,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_分账",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='分账']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='分账']])[1]"
+          ]
+        },
+        {
+          "order": 9,
+          "type": "click",
+          "key": "pdd_cashier_acct_type_服务消费",
+          "waitVisibleTimeoutMs": 10000,
+          "postClickWaitMs": 200,
+          "target": {
+            "selector": "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//label[.//*[contains(@class,'CBX_textWrapper')][normalize-space()='服务消费']])[1]"
+          },
+          "alternateClickSelector": [
+            "xpath=(//div[contains(@class,'Container_container')]//div[contains(@class,'TAB_outerWrapper')]//div[contains(@class,'TAB_content')]/div/div[1]/div//*[contains(@class,'CBX_outerWrapper')][.//*[contains(@class,'CBX_textWrapper')][normalize-space()='服务消费']])[1]"
+          ]
+        },
+        {
+          "order": 10,
+          "type": "click",
+          "key": "pdd_cashier_query",
+          "waitVisibleTimeoutMs": 15000,
+          "postClickWaitMs": 5000,
+          "target": {
+            "selector": "#root div[class*='Container_container'] button:has-text('查询')"
+          },
+          "alternateClickSelector": [
+            "div[class*='TAB_content'] button:has-text('查询')",
+            "button:has-text('查询')"
+          ],
+          "comment": "查询后等待列表/账单卡片渲染。若站点慢或随后跳转到 cashier.pinduoduo.com/main/bills/export-history 再下载，脚本已用 context 级监听下载。"
+        },
+        {
+          "order": 11,
+          "type": "click",
+          "key": "export_pdd_cashier_balance",
+          "waitVisibleTimeoutMs": 25000,
+          "postClickWaitMs": 1200,
+          "expectDownloadTimeoutMs": 180000,
+          "exportClickOpensNewTab": true,
+          "openExportTabTarget": {
+            "selector": "#exportBalance-btn"
+          },
+          "alternateOpenExportTabSelector": [
+            "button:has-text('导出')"
+          ],
+          "openExportTabTimeoutMs": 60000,
+          "postOpenExportTabWaitMs": 2000,
+          "closeExportNewTabWhenDone": true,
+          "getByRoleFallback": {
+            "role": "button",
+            "name": "下载账单"
+          },
+          "downloadFileNameTemplate": "{account}_对账_{yday}_raw{ext}",
+          "target": {
+            "selector": "#downloadBalance-btn-0"
+          },
+          "alternateClickSelector": [
+            "[id^='downloadBalance-btn']",
+            "xpath=(//*[contains(@id,'downloadBalance-btn')])[1]",
+            "#root div[class*='Container_container'] button:has-text('下载账单')",
+            "button:has-text('下载账单')"
+          ],
+          "comment": "点击「导出」会新开标签页；脚本在旧页点 openExportTabTarget，再在新页找「下载账单」（主选 #downloadBalance-btn-0）。站点可能下发 zip，{ext} 随浏览器建议名。勿用 [id^=] 作主选。"
+        }
+      ],
+      "fields": []
+    }
+  ]
+}

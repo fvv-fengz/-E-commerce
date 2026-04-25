@@ -1,0 +1,107 @@
+{
+  "templateVersion": 1,
+  "name": "抖店售后列表导出（单页测试）",
+  "notes": [
+    "从 scrape-template-jinritemai-v1.json 的 fxg_aftersale_order_list_export 抽出，仅跑售后列表：url 直达列表页 → 展开筛选 → 退款成功 → 时间「昨日」→ 查询 → 导出。",
+    "运行：python scripts/run_aftersale_export_test.py（或 .bat）。需 CDP Chrome 已登录抖店；多店加 --accounts 店名 或改本页 runAccounts。",
+    "若打开列表后不在目标店铺，可把 preSwitchUrl 设为 https://fxg.jinritemai.com/ffa/mshop/homepage/index 先回首页再切店。"
+  ],
+  "datePolicyDefault": "previousCalendarDay",
+  "pages": [
+    {
+      "id": "fxg_aftersale_order_list_export",
+      "url": "https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list",
+      "postGotoWaitMs": 1200,
+      "preSwitchUrl": "",
+      "runAccounts": [],
+      "accountSwitcher": {
+        "mode": "fxgShopModal",
+        "headerMenuHoverSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div"
+        ],
+        "headerMenuTriggerSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4)",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4)"
+        ],
+        "openSwitchModalSelector": [
+          "#fxg-pc-header div[class*='nav-menu_rightBar'] div[class*='index_wrapper'] > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div",
+          "#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"
+        ],
+        "shopListContainerSelector": "div.auxo-modal-wrap.auxo-modal-centered div[class*='index_roleList']",
+        "switchMenuText": "切换组织/店铺",
+        "modalTitleContains": "请选择店铺",
+        "menuOpenSelectors": [
+          "[class*='header'] [class*='avatar']",
+          "header img"
+        ]
+      },
+      "kind": "detail",
+      "description": "售后列表单测：与主模板该页保持一致；主模板变更时请同步此处或改回引用主模板跑 --page-ids。",
+      "scope": { "listRoot": "", "itemRoot": "" },
+      "interactions": [
+        {
+          "order": 2,
+          "type": "click",
+          "key": "aftersale_expand_search_footer",
+          "postClickWaitMs": 400,
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-text.aurora-btn-color-default.aurora-btn-variant-text > span"
+          },
+          "alternateClickSelector": "#root div[class*='searchForm'] > div[class*='footer'] > button.aurora-btn > span",
+          "comment": "新版售后顶栏搜索区折叠时先点 footer 展开，再点状态筛选"
+        },
+        {
+          "order": 3,
+          "type": "selectFilter",
+          "key": "refund_success",
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.auxo-row > div:nth-child(5) > div > div.sections-guOvW5 > div > div > div.fieldWrapper-Sj8sG0 > div > div > div > span.auxo-select-selection-item"
+          },
+          "alternateSelectFilterSelector": [
+            "#root div[class*='searchForm'] div.auxo-row > div:nth-child(5) span.auxo-select-selection-item",
+            "#orderAppContainer > div > div.styles_searchForm__wpWhK > div.auxo-row > div:nth-child(5)"
+          ],
+          "value": "退款成功",
+          "comment": "新版 #root 售后状态下拉；哈希变时 class* 与旧版兜底"
+        },
+        {
+          "order": 4,
+          "type": "selectFilter",
+          "key": "aftersale_time_yesterday",
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.foldable-OwdcbV > div > div.auxo-col.auxo-col-16 > div > div.sections-guOvW5 > div.sectionWrapper-KcG3dR.normalSectionWrapper-zJ0b48.borderless-O3AQKU > div > div > div > span > div > div"
+          },
+          "alternateSelectFilterSelector": [
+            "#root div[class*='searchForm'] div[class*='foldable'] div.auxo-col.auxo-col-16 div[class*='sections'] div[class*='sectionWrapper'] > div > div > div > span > div > div"
+          ],
+          "value": "昨日",
+          "comment": "与主模板一致；选项文案为「昨日」，脚本会同时尝试「昨天」"
+        },
+        {
+          "order": 5,
+          "type": "click",
+          "key": "aftersale_footer_query",
+          "postClickWaitMs": 1000,
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled"
+          },
+          "alternateClickSelector": "#root div[class*='searchForm'] > div[class*='footer'] > button.aurora-btn-secondary.aurora-btn-variant-filled",
+          "comment": "footer 查询后再导出"
+        },
+        {
+          "order": 6,
+          "type": "click",
+          "key": "export_aftersale_orders",
+          "bindsFields": ["export_aftersale_orders"],
+          "target": {
+            "selector": "#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-default.aurora-btn-color-default.aurora-btn-variant-tertiary.aurora-btn-icon-end.exportBtn-aKFegn"
+          },
+          "alternateClickSelector": "#root div[class*='searchForm'] > div[class*='footer'] > button[class*='exportBtn']",
+          "comment": "导出（key 含 export → expect_download）"
+        }
+      ],
+      "fields": []
+    }
+  ]
+}

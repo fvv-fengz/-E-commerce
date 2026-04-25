@@ -1,0 +1,26 @@
+---
+description: 抖店/拼多多试运行输出目录与客户交付 dailydate 打包约定
+globs: app/config_registry/**/*.json,doc/scrape-template-jinritemai*.json,doc/scrape-template-pdd*.json,scripts/run_template_trial.py,scripts/streamlit_ops_console.py
+alwaysApply: false
+---
+
+# 产出目录与 dailydate 交付
+
+## 打包参数
+
+- **命令行**单独跑 `scripts/run_template_trial.py`，若要在试运**成功结束**时自动整理 `dailydate/`（复制采集表 + 下载目录 zip）：使用 **`--package-dailydate-at-end`**（中断/abort 不会触发）。
+- **内置配置**（`builtin_configs.json`）：**`douyin_default`**、**`douyin_test_customers`**、**`pdd_default`** 均含 **`default_trial_args`: `["--package-dailydate-at-end"]`**，便于命令行默认带上。
+
+## Streamlit
+
+- 若配置启用了 **`client_deliverable`**（采集→后处理→`package_dailydate_deliverable.py`），控制台会在注入试运行参数时**去掉** `--package-dailydate-at-end`，避免早于后处理打包、或与独立「客户交付」步骤重复。
+- **拼多多** `pdd_default` 现已与抖店同级：`postprocess`（`process_pdd_data.py`）后再跑 **`client_deliverable`**。
+
+## 模板输出目录
+
+- **抖店**：`runOutputSubdir` 如 `jinritemai_v1_{run_ts}`。
+- **拼多多**：主模板 `pdd_extract_{run_ts}`；**测试用户组** 模板 `doc/scrape-template-pdd-拼多多数据提取_测试用户组.json` + `pdd_extract_test_users_{run_ts}` + `doc/pdd_店铺账号信息_测试用户组.csv`，内置控制台 **`pdd_test_users`**（对齐抖店测试包与正式包分流）。
+
+## 新建配置
+
+- 抖店/拼多多内置条目可参考：**`default_trial_args`** +（控制台全流程时）**`client_deliverable`**；勿让试运行末尾打包与独立交付对同一批文件重复执行。

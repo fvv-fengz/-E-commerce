@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "pdd_default": [
+      { "name": "甑维居家日用", "username": "17898812176", "password": "Qwe123456" },
+      { "name": "根少家的小铺83", "username": "15397588572", "password": "Qwe123456" },
+      { "name": "胡小涛小店87", "username": "17770414771", "password": "Qwe123456" },
+      { "name": "聂小霞的铺子84", "username": "19164064137", "password": "Qwe123456" },
+      { "name": "彬彬家的网店18", "username": "15024393156", "password": "Qwe123456" },
+      { "name": "阿顺的小店铺2256", "username": "15270018796", "password": "Qwe123456" },
+      { "name": "胡家的商铺1632", "username": "15724905937", "password": "Qwe123456" },
+      { "name": "小胡的网店3621", "username": "13958492807", "password": "Qwe123456" },
+      { "name": "彬少家的小铺7543", "username": "13217945301", "password": "Qwe123456" },
+      { "name": "丁家的店铺1382", "username": "13207046052", "password": "Qwe123456" },
+      { "name": "俊少家的小铺1692", "username": "18679481157", "password": "Qwe123456" },
+      { "name": "甑维饰界供应链", "username": "15381756795", "password": "Qwe123456" },
+      { "name": "饰界发饰屋", "username": "17336729580", "password": "Qwe123456" },
+      { "name": "甑维鞋业", "username": "17306841519", "password": "Qwe123456" },
+      { "name": "许小鹏的网店2647", "username": "17268029148", "password": "Qwe123456" },
+      { "name": "小许的铺子9906", "username": "19388282262", "password": "Qwe123456" },
+      { "name": "臻选百货超市40", "username": "18850661818", "password": "Qwe123456" },
+      { "name": "丁哥家的店23", "username": "18012727281", "password": "Qwe123456" },
+      { "name": "丁小华的小店铺2500", "username": "19706472578", "password": "Qwe123456" }
+    ]
+  }
+}

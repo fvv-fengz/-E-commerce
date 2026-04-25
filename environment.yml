@@ -1,0 +1,17 @@
+# conda 环境定义（与 requirements.txt 对齐；便于 conda / conda-pack）
+# 创建： conda env create -f environment.yml
+# 激活： conda activate douyin-compass
+name: douyin-compass
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - playwright>=1.40
+      - pandas>=2.0
+      - openpyxl>=3.1
+      - xlrd>=2.0.1
+      - pillow>=10.0
+      - streamlit>=1.33.0

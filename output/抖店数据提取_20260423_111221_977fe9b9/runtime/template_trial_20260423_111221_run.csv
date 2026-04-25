@@ -1,0 +1,127 @@
+﻿日志时间,自运行起秒,账号,页面,阶段,键/标签,动作,结果,是否成功
+2026-04-23 11:12:23,1.922,小缘发饰供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 11:12:40,18.213,小缘发饰供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 小缘发饰供应链（CSS 流程）,是
+2026-04-23 11:12:44,22.220,小缘发饰供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 11:13:24,62.724,小缘发饰供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 11:13:27,65.659,小缘发饰供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥710.97
+昨日
+¥2,716.37
+同行基准
+¥4,431.99
+用户支付金额
+¥561.48
+昨日
+¥2,291.58
+同行基准
+¥4,130.38
+客单价
+¥2.69
+昨日
+¥3.00
+同行基准
+¥20.5
+成交订单数
+216
+昨日
+779
+同行基准
+267
+结算金额
+¥674.85
+昨日
+¥2,524.37
+同行基准
+¥3,933.4
+商品曝光人数
+4.13
+万
+昨日
+15.59万
+同行标杆
+20.7万
+商品点击人数
+1,391
+昨日
+5,142
+同行基准
+1,627
+成交人数
+209
+昨日
+765
+同行基准
+212
+退款金额（退款时间）
+¥68.13
+昨日
+¥243.12
+同行顶尖
+¥0
+退款金额（支付时间）
+¥29.00
+昨日
+¥177.60
+同行顶尖
+¥0
+退款率（支付时间）
+5.16%
+昨日
+7.75%
+同行顶尖
+0%
+成交退款金额（退款时间）
+¥79.96
+昨日
+¥260.56
+同行顶尖
+¥0
+退款订单数（退款时间）
+25
+昨日
+87
+同行标杆
+11
+退款订单数（支付时间）
+13
+昨日
+63
+同行标杆
+4
+商品曝光-点击转化率（人数）
+3.37%
+昨日
+3.3%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+15.03%
+昨日
+14.88%
+同行标杆
+26.74%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 11:13:29,67.599,小缘发饰供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 11:13:36,74.136,小缘发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 11:13:41,79.739,小缘发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 11:13:42,80.806,小缘发饰供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 11:13:45,83.518,小缘发饰供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 11:13:47,85.701,小缘发饰供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_111221_977fe9b9\downloads\小缘发饰供应链_DL202604231113431783165953.csv,是
+2026-04-23 11:13:51,89.323,小缘发饰供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 11:13:55,93.378,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 11:13:57,95.190,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 11:14:10,108.869,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 11:14:12,110.334,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 11:14:25,124.032,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 11:14:26,124.627,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 11:14:32,131.036,小缘发饰供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_111221_977fe9b9\downloads\小缘发饰供应链_售后单-2026-04-23 11_14_32.xlsx,是
+2026-04-23 11:14:36,134.364,小缘发饰供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1846728829127945&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 11:14:41,139.686,小缘发饰供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 11:14:45,143.457,小缘发饰供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,101.96  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 11:14:46,144.307,小缘发饰供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,12.60  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 11:14:46,144.730,小缘发饰供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,366  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 11:14:47,145.974,熠熠生辉饰品屋,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 11:15:01,159.715,熠熠生辉饰品屋,globalAccountLoop,account,switch,switchAccount,已切换店铺: 熠熠生辉饰品屋（CSS 流程）,是
+2026-04-23 11:15:05,163.353,熠熠生辉饰品屋,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是

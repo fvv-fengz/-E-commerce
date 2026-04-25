@@ -1,0 +1,2365 @@
+﻿日志时间,自运行起秒,账号,页面,阶段,键/标签,动作,结果,是否成功
+2026-04-23 10:01:20,2.298,伊一优选百货,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:01:35,16.797,伊一优选百货,globalAccountLoop,account,switch,switchAccount,已切换店铺: 伊一优选百货（CSS 流程）,是
+2026-04-23 10:01:39,21.338,伊一优选百货,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:02:17,58.514,伊一优选百货,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:02:20,61.430,伊一优选百货,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥198.24
+昨日
+¥1,057.26
+同行基准
+¥573.27
+用户支付金额
+¥153.19
+昨日
+¥808.12
+同行基准
+¥544.96
+结算金额
+¥185.52
+昨日
+¥1,025.28
+同行基准
+¥512.3
+客单价
+¥4.14
+昨日
+¥3.67
+同行基准
+¥15.96
+成交订单数
+37
+昨日
+222
+同行标杆
+167
+商品曝光人数
+1.02
+万
+昨日
+4.04万
+同行标杆
+4.76万
+商品点击人数
+481
+昨日
+2,368
+同行标杆
+1,631
+成交人数
+37
+昨日
+220
+同行标杆
+141
+退款金额（退款时间）
+¥15.61
+昨日
+¥58.77
+同行顶尖
+¥0
+退款金额（支付时间）
+¥11.72
+昨日
+¥27.64
+同行标杆
+¥0
+退款率（支付时间）
+7.65%
+昨日
+3.42%
+同行标杆
+0%
+成交退款金额（退款时间）
+¥16.61
+昨日
+¥63.68
+同行顶尖
+¥0
+退款订单数（退款时间）
+4
+昨日
+14
+同行标杆
+1
+退款订单数（支付时间）
+3
+昨日
+5
+同行标杆
+0
+商品曝光-点击转化率（人数）
+4.74%
+昨日
+5.87%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+7.69%
+昨日
+9.29%
+同行基准
+9.04%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:02:21,63.355,伊一优选百货,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:02:28,69.983,伊一优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:02:34,75.541,伊一优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:02:35,76.594,伊一优选百货,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:02:37,79.302,伊一优选百货,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:02:40,81.661,伊一优选百货,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\伊一优选百货_DL202604231002272994786842.csv,是
+2026-04-23 10:02:43,85.337,伊一优选百货,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:02:47,89.108,伊一优选百货,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:02:49,91.315,伊一优选百货,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:03:03,104.993,伊一优选百货,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:03:05,106.482,伊一优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:03:18,120.166,伊一优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:03:19,120.667,伊一优选百货,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:03:25,127.055,伊一优选百货,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\伊一优选百货_售后单-2026-04-23 10_03_25.xlsx,是
+2026-04-23 10:03:29,130.645,伊一优选百货,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1771818967503883&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:03:35,137.005,伊一优选百货,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:03:39,140.764,伊一优选百货,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,67.54  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:03:40,141.595,伊一优选百货,qianchuan_home_cost_roi,field,净成交ROI,extract:text,14.86  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:03:40,142.035,伊一优选百货,qianchuan_home_cost_roi,field,净成交订单数,extract:text,208  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:03:41,142.870,阿顺饰品供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:03:56,157.600,阿顺饰品供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 阿顺饰品供应链（CSS 流程）,是
+2026-04-23 10:03:59,160.842,阿顺饰品供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:04:36,197.916,阿顺饰品供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:04:39,200.822,阿顺饰品供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,449.00
+昨日
+¥5,813.83
+同行基准
+¥4,431.99
+用户支付金额
+¥959.98
+昨日
+¥4,207.31
+同行基准
+¥4,130.38
+客单价
+¥2.30
+昨日
+¥2.68
+同行基准
+¥20.5
+结算金额
+¥1,364.66
+昨日
+¥5,405.09
+同行基准
+¥3,933.4
+成交订单数
+429
+昨日
+1,601
+同行标杆
+915
+商品曝光人数
+28.16
+万
+昨日
+104.76万
+同行顶尖
+148.71万
+商品点击人数
+5,756
+昨日
+2.15万
+同行标杆
+6,830
+成交人数
+418
+昨日
+1,568
+同行标杆
+763
+退款金额（退款时间）
+¥94.38
+昨日
+¥488.71
+同行顶尖
+¥0
+退款金额（支付时间）
+¥68.90
+昨日
+¥371.57
+同行顶尖
+¥0
+退款率（支付时间）
+7.18%
+昨日
+8.83%
+同行标杆
+5.41%
+成交退款金额（退款时间）
+¥116.17
+昨日
+¥542.77
+同行顶尖
+¥0
+退款订单数（退款时间）
+39
+昨日
+140
+同行标杆
+11
+退款订单数（支付时间）
+29
+昨日
+91
+同行标杆
+4
+商品曝光-点击转化率（人数）
+2.04%
+昨日
+2.05%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+7.26%
+昨日
+7.3%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:04:40,202.339,阿顺饰品供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:04:47,208.703,阿顺饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:04:52,214.216,阿顺饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:04:53,215.263,阿顺饰品供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:04:56,217.960,阿顺饰品供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:04:58,220.278,阿顺饰品供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\阿顺饰品供应链_DL202604231004512910847270.csv,是
+2026-04-23 10:05:02,224.024,阿顺饰品供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:05:06,227.944,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:05:08,229.967,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:05:22,243.633,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:05:23,245.111,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:05:37,258.801,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:05:37,259.330,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:05:44,265.650,阿顺饰品供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\阿顺饰品供应链_售后单-2026-04-23 10_05_43.xlsx,是
+2026-04-23 10:05:47,269.056,阿顺饰品供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1859890681140232&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:05:53,274.645,阿顺饰品供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:05:56,278.393,阿顺饰品供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,197.62  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:05:57,279.198,阿顺饰品供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,25.55  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:05:58,279.612,阿顺饰品供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,1394  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:05:59,280.905,卡诺优选百货,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:06:13,295.279,卡诺优选百货,globalAccountLoop,account,switch,switchAccount,已切换店铺: 卡诺优选百货（CSS 流程）,是
+2026-04-23 10:06:19,300.608,卡诺优选百货,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:06:55,337.199,卡诺优选百货,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:06:58,340.145,卡诺优选百货,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥617.60
+昨日
+¥2,124.64
+同行标杆
+¥1,787
+用户支付金额
+¥506.27
+昨日
+¥1,862.35
+同行基准
+¥544.96
+客单价
+¥3.78
+昨日
+¥4.35
+同行基准
+¥15.96
+成交订单数
+138
+昨日
+444
+同行标杆
+167
+结算金额
+¥579.05
+昨日
+¥1,901.84
+同行标杆
+¥1,595.6
+商品曝光人数
+3.64
+万
+昨日
+14.43万
+同行标杆
+4.76万
+商品点击人数
+1,300
+昨日
+5,195
+同行标杆
+1,631
+成交人数
+134
+昨日
+428
+同行标杆
+141
+退款金额（退款时间）
+¥64.51
+昨日
+¥290.14
+同行标杆
+¥16.3
+退款金额（支付时间）
+¥36.59
+昨日
+¥208.38
+同行标杆
+¥0
+退款率（支付时间）
+7.23%
+昨日
+11.19%
+同行标杆
+0%
+成交退款金额（退款时间）
+¥69.69
+昨日
+¥308.56
+同行标杆
+¥17.33
+退款订单数（退款时间）
+15
+昨日
+45
+同行基准
+7
+退款订单数（支付时间）
+8
+昨日
+27
+同行基准
+4
+商品曝光-点击转化率（人数）
+3.57%
+昨日
+3.6%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+10.31%
+昨日
+8.24%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:07:00,341.581,卡诺优选百货,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:07:06,347.867,卡诺优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:07:12,353.441,卡诺优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:07:13,354.493,卡诺优选百货,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:07:15,357.215,卡诺优选百货,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:07:18,359.926,卡诺优选百货,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\卡诺优选百货_DL202604231007050521736747.csv,是
+2026-04-23 10:07:23,364.970,卡诺优选百货,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:07:27,369.325,卡诺优选百货,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:07:29,371.073,卡诺优选百货,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:07:43,384.699,卡诺优选百货,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:07:44,386.135,卡诺优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:07:58,399.829,卡诺优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:07:58,400.354,卡诺优选百货,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:08:05,406.828,卡诺优选百货,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\卡诺优选百货_售后单-2026-04-23 10_08_05.xlsx,是
+2026-04-23 10:08:08,410.111,卡诺优选百货,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1799542938571787&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:08:14,415.675,卡诺优选百货,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:08:18,419.442,卡诺优选百货,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,49.26  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:08:18,420.312,卡诺优选百货,qianchuan_home_cost_roi,field,净成交ROI,extract:text,25.91  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:08:19,420.737,卡诺优选百货,qianchuan_home_cost_roi,field,净成交订单数,extract:text,240  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:08:20,421.919,亿芭发饰供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:08:35,436.984,亿芭发饰供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 亿芭发饰供应链（CSS 流程）,是
+2026-04-23 10:08:39,441.224,亿芭发饰供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:09:16,478.174,亿芭发饰供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:09:19,481.095,亿芭发饰供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥950.62
+昨日
+¥4,184.21
+同行基准
+¥4,431.99
+用户支付金额
+¥777.55
+昨日
+¥3,628.72
+同行基准
+¥4,130.38
+客单价
+¥3.28
+昨日
+¥3.97
+同行基准
+¥20.5
+成交订单数
+238
+昨日
+970
+同行基准
+267
+结算金额
+¥931.07
+昨日
+¥3,901.46
+同行基准
+¥3,933.4
+商品曝光人数
+5.18
+万
+昨日
+20.31万
+同行标杆
+20.7万
+商品点击人数
+2,335
+昨日
+8,679
+同行标杆
+6,830
+成交人数
+237
+昨日
+914
+同行标杆
+763
+退款金额（退款时间）
+¥46.14
+昨日
+¥323.39
+同行顶尖
+¥0
+退款金额（支付时间）
+¥19.55
+昨日
+¥256.35
+同行顶尖
+¥0
+退款率（支付时间）
+2.51%
+昨日
+7.06%
+同行顶尖
+0%
+成交退款金额（退款时间）
+¥46.14
+昨日
+¥353.94
+同行顶尖
+¥0
+退款订单数（退款时间）
+13
+昨日
+97
+同行标杆
+11
+退款订单数（支付时间）
+5
+昨日
+72
+同行标杆
+4
+商品曝光-点击转化率（人数）
+4.51%
+昨日
+4.27%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+10.15%
+昨日
+10.53%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:09:21,482.504,亿芭发饰供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:09:27,488.714,亿芭发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:09:32,494.284,亿芭发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:09:33,495.325,亿芭发饰供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:09:36,498.035,亿芭发饰供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:09:39,500.559,亿芭发饰供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\亿芭发饰供应链_DL202604231009261187025448.csv,是
+2026-04-23 10:09:42,504.050,亿芭发饰供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:09:46,507.980,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:09:48,509.738,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:10:01,523.392,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:10:03,524.797,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:10:17,538.511,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:10:17,539.035,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:10:23,545.249,亿芭发饰供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\亿芭发饰供应链_售后单-2026-04-23 10_10_23.xlsx,是
+2026-04-23 10:10:26,548.397,亿芭发饰供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1818139839419610&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:10:32,553.824,亿芭发饰供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:10:36,557.577,亿芭发饰供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,49.07  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:10:36,558.366,亿芭发饰供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,53.24  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:10:37,558.774,亿芭发饰供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,568  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:10:38,559.630,阿诗曼优选,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:11:06,587.989,阿诗曼优选,globalAccountLoop,account,switch,switchAccount,已切换店铺: 阿诗曼优选（CSS 流程）,是
+2026-04-23 10:11:10,591.684,阿诗曼优选,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:11:47,629.154,阿诗曼优选,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:11:50,632.067,阿诗曼优选,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥242.84
+昨日
+¥1,018.23
+同行基准
+¥573.27
+用户支付金额
+¥202.63
+昨日
+¥852.89
+同行基准
+¥544.96
+客单价
+¥4.71
+昨日
+¥4.61
+同行基准
+¥15.96
+成交订单数
+43
+昨日
+193
+同行标杆
+167
+结算金额
+¥226.56
+昨日
+¥955.99
+同行基准
+¥512.3
+商品曝光人数
+9,193
+昨日
+3.55万
+同行标杆
+4.76万
+商品点击人数
+461
+昨日
+1,861
+同行标杆
+1,631
+成交人数
+43
+昨日
+185
+同行标杆
+141
+退款金额（退款时间）
+¥18.06
+昨日
+¥62.90
+同行标杆
+¥16.3
+退款金额（支付时间）
+¥15.55
+昨日
+¥52.45
+同行标杆
+¥0
+退款率（支付时间）
+7.67%
+昨日
+6.15%
+同行标杆
+0%
+成交退款金额（退款时间）
+¥18.79
+昨日
+¥77.03
+同行标杆
+¥17.33
+退款订单数（退款时间）
+5
+昨日
+17
+同行标杆
+1
+退款订单数（支付时间）
+4
+昨日
+12
+同行标杆
+0
+商品曝光-点击转化率（人数）
+5.01%
+昨日
+5.24%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+9.33%
+昨日
+9.94%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:11:52,633.576,阿诗曼优选,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:11:58,640.072,阿诗曼优选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:12:04,645.561,阿诗曼优选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:12:05,646.602,阿诗曼优选,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:12:07,649.321,阿诗曼优选,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:12:10,651.571,阿诗曼优选,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\阿诗曼优选_DL202604231012011535115816.csv,是
+2026-04-23 10:12:13,655.320,阿诗曼优选,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:12:17,659.392,阿诗曼优选,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:12:19,661.392,阿诗曼优选,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:12:33,675.048,阿诗曼优选,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:12:35,676.584,阿诗曼优选,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:12:48,690.270,阿诗曼优选,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:12:49,690.873,阿诗曼优选,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:12:55,697.318,阿诗曼优选,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\阿诗曼优选_售后单-2026-04-23 10_12_55.xlsx,是
+2026-04-23 10:12:59,700.489,阿诗曼优选,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1787177753440256&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:13:04,705.966,阿诗曼优选,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:13:08,709.714,阿诗曼优选,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,5.19  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:13:09,711.207,阿诗曼优选,qianchuan_home_cost_roi,field,净成交ROI,extract:text,112.15  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:13:10,711.938,阿诗曼优选,qianchuan_home_cost_roi,field,净成交订单数,extract:text,106  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:13:11,712.907,女人坊饰品发饰,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:13:27,728.848,女人坊饰品发饰,globalAccountLoop,account,switch,switchAccount,已切换店铺: 女人坊饰品发饰（CSS 流程）,是
+2026-04-23 10:13:31,732.645,女人坊饰品发饰,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:14:08,769.784,女人坊饰品发饰,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:14:11,772.721,女人坊饰品发饰,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥127.52
+昨日
+¥366.89
+同行基准
+¥573.27
+用户支付金额
+¥110.33
+昨日
+¥312.72
+同行基准
+¥544.96
+客单价
+¥3.68
+昨日
+¥3.68
+同行基准
+¥15.96
+成交订单数
+30
+昨日
+88
+同行基准
+37
+结算金额
+¥118.66
+昨日
+¥349.74
+同行基准
+¥512.3
+商品曝光人数
+5,048
+昨日
+2.1万
+同行基准
+5,442
+商品点击人数
+260
+昨日
+1,068
+同行基准
+336
+成交人数
+30
+昨日
+85
+同行标杆
+141
+退款金额（退款时间）
+¥12.11
+昨日
+¥23.88
+同行顶尖
+¥0
+退款金额（支付时间）
+¥6.86
+昨日
+¥15.00
+同行标杆
+¥0
+退款率（支付时间）
+6.22%
+昨日
+4.8%
+同行标杆
+0%
+成交退款金额（退款时间）
+¥18.11
+昨日
+¥26.46
+同行标杆
+¥17.33
+退款订单数（退款时间）
+4
+昨日
+8
+同行标杆
+1
+退款订单数（支付时间）
+2
+昨日
+4
+同行标杆
+0
+商品曝光-点击转化率（人数）
+5.15%
+昨日
+5.08%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+11.54%
+昨日
+7.96%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:14:13,774.812,女人坊饰品发饰,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:14:19,781.232,女人坊饰品发饰,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:14:25,786.788,女人坊饰品发饰,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:14:26,787.824,女人坊饰品发饰,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:14:29,790.535,女人坊饰品发饰,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:14:31,793.318,女人坊饰品发饰,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\女人坊饰品发饰_DL202604231014160301994502.csv,是
+2026-04-23 10:14:35,796.973,女人坊饰品发饰,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:14:39,800.716,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:14:41,802.745,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:14:54,816.396,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:14:56,817.800,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:15:10,831.482,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:15:10,832.015,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:15:17,838.573,女人坊饰品发饰,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\女人坊饰品发饰_售后单-2026-04-23 10_15_16.xlsx,是
+2026-04-23 10:15:20,841.742,女人坊饰品发饰,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1812314390855684&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:15:25,846.880,女人坊饰品发饰,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:15:29,850.631,女人坊饰品发饰,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,0.00  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:15:29,851.386,女人坊饰品发饰,qianchuan_home_cost_roi,field,净成交ROI,extract:text,"整体支付ROI
+--
+--  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",是
+2026-04-23 10:15:30,851.786,女人坊饰品发饰,qianchuan_home_cost_roi,field,净成交订单数,extract:text,0  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:15:31,852.716,芙瑶优选,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:15:44,865.840,芙瑶优选,globalAccountLoop,account,switch,switchAccount,已切换店铺: 芙瑶优选（CSS 流程）,是
+2026-04-23 10:15:48,869.931,芙瑶优选,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:16:25,906.936,芙瑶优选,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:16:28,909.860,芙瑶优选,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥2,137.89
+昨日
+¥10,031.23
+同行基准
+¥4,431.99
+用户支付金额
+¥1,521.04
+昨日
+¥8,029.69
+同行基准
+¥4,130.38
+客单价
+¥3.40
+昨日
+¥4.50
+同行基准
+¥20.5
+成交订单数
+465
+昨日
+1,937
+同行标杆
+915
+结算金额
+¥1,987.52
+昨日
+¥9,462.71
+同行基准
+¥3,933.4
+商品曝光人数
+6.01
+万
+昨日
+26.5万
+同行标杆
+20.7万
+商品点击人数
+3,917
+昨日
+1.63万
+同行标杆
+6,830
+成交人数
+448
+昨日
+1,783
+同行标杆
+763
+退款金额（退款时间）
+¥169.31
+昨日
+¥726.51
+同行顶尖
+¥0
+退款金额（支付时间）
+¥122.70
+昨日
+¥531.34
+同行标杆
+¥120.76
+退款率（支付时间）
+8.07%
+昨日
+6.62%
+同行标杆
+5.41%
+成交退款金额（退款时间）
+¥196.98
+昨日
+¥782.37
+同行顶尖
+¥0
+退款订单数（退款时间）
+39
+昨日
+168
+同行标杆
+11
+退款订单数（支付时间）
+31
+昨日
+128
+同行标杆
+4
+商品曝光-点击转化率（人数）
+6.52%
+昨日
+6.14%
+同行标杆
+24.61%
+商品点击-成交转化率（人数）
+11.44%
+昨日
+10.96%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:16:30,911.422,芙瑶优选,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:16:36,917.756,芙瑶优选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:16:41,923.257,芙瑶优选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:16:42,924.328,芙瑶优选,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:16:45,927.025,芙瑶优选,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:17:38,979.785,芙瑶优选,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\芙瑶优选_DL202604231016322711179791.csv,是
+2026-04-23 10:17:42,983.453,芙瑶优选,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:17:45,987.064,芙瑶优选,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:17:47,989.357,芙瑶优选,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:18:01,1003.029,芙瑶优选,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:18:03,1004.435,芙瑶优选,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:18:16,1018.107,芙瑶优选,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:18:17,1018.648,芙瑶优选,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:18:23,1025.142,芙瑶优选,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\芙瑶优选_售后单-2026-04-23 10_18_23.xlsx,是
+2026-04-23 10:18:26,1028.300,芙瑶优选,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1785321316256779&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:18:32,1033.719,芙瑶优选,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:18:36,1037.485,芙瑶优选,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,359.95  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:18:37,1038.890,芙瑶优选,qianchuan_home_cost_roi,field,净成交ROI,extract:text,17.78  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:18:38,1039.613,芙瑶优选,qianchuan_home_cost_roi,field,净成交订单数,extract:text,1230  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:18:39,1040.637,TOP居家日用,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:18:52,1054.117,TOP居家日用,globalAccountLoop,account,switch,switchAccount,已切换店铺: TOP居家日用（CSS 流程）,是
+2026-04-23 10:18:57,1059.364,TOP居家日用,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:19:35,1096.622,TOP居家日用,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:19:38,1099.519,TOP居家日用,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥316.66
+昨日
+¥1,570.36
+同行基准
+¥573.27
+用户支付金额
+¥258.83
+昨日
+¥1,380.17
+同行基准
+¥544.96
+客单价
+¥3.92
+昨日
+¥4.78
+同行基准
+¥15.96
+成交订单数
+69
+昨日
+328
+同行标杆
+167
+结算金额
+¥281.43
+昨日
+¥1,500.47
+同行基准
+¥512.3
+商品曝光人数
+1.21
+万
+昨日
+4.7万
+同行标杆
+4.76万
+商品点击人数
+655
+昨日
+2,397
+同行标杆
+1,631
+成交人数
+66
+昨日
+289
+同行标杆
+141
+退款金额（退款时间）
+¥53.10
+昨日
+¥92.10
+同行标杆
+¥16.3
+退款金额（支付时间）
+¥32.48
+昨日
+¥55.90
+同行标杆
+¥0
+退款率（支付时间）
+12.55%
+昨日
+4.05%
+同行基准
+8.78%
+成交退款金额（退款时间）
+¥55.85
+昨日
+¥106.09
+同行标杆
+¥17.33
+退款订单数（退款时间）
+15
+昨日
+29
+同行基准
+7
+退款订单数（支付时间）
+10
+昨日
+18
+同行基准
+4
+商品曝光-点击转化率（人数）
+5.4%
+昨日
+5.1%
+同行标杆
+21.5%
+商品点击-成交转化率（人数）
+10.08%
+昨日
+12.06%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:19:39,1101.021,TOP居家日用,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:19:46,1107.427,TOP居家日用,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:19:51,1113.000,TOP居家日用,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:19:52,1114.032,TOP居家日用,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:19:55,1116.737,TOP居家日用,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:19:57,1118.868,TOP居家日用,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\TOP居家日用_DL202604231019535932667905.csv,是
+2026-04-23 10:20:01,1122.466,TOP居家日用,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:20:04,1126.238,TOP居家日用,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:20:06,1128.367,TOP居家日用,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:20:20,1142.009,TOP居家日用,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:20:21,1143.420,TOP居家日用,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:20:35,1157.115,TOP居家日用,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:20:36,1157.625,TOP居家日用,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:20:42,1164.059,TOP居家日用,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\TOP居家日用_售后单-2026-04-23 10_20_42.xlsx,是
+2026-04-23 10:20:45,1167.253,TOP居家日用,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1852667791879561&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:20:51,1172.488,TOP居家日用,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:20:54,1176.252,TOP居家日用,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,33.82  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:20:55,1177.111,TOP居家日用,qianchuan_home_cost_roi,field,净成交ROI,extract:text,42.45  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:20:56,1177.533,TOP居家日用,qianchuan_home_cost_roi,field,净成交订单数,extract:text,301  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:20:57,1178.499,九玥优选百货,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:21:12,1193.881,九玥优选百货,globalAccountLoop,account,switch,switchAccount,已切换店铺: 九玥优选百货（CSS 流程）,是
+2026-04-23 10:21:16,1198.303,九玥优选百货,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:21:53,1234.766,九玥优选百货,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:21:56,1237.702,九玥优选百货,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥2,623.41
+昨日
+¥10,872.51
+同行基准
+¥4,431.99
+用户支付金额
+¥2,053.29
+昨日
+¥8,862.66
+同行基准
+¥4,130.38
+客单价
+¥2.59
+昨日
+¥2.82
+同行基准
+¥20.5
+结算金额
+¥1,998.68
+昨日
+¥8,328.66
+同行基准
+¥3,933.4
+成交订单数
+814
+昨日
+3,268
+同行标杆
+915
+商品曝光人数
+15.88
+万
+昨日
+63.95万
+同行标杆
+20.7万
+商品点击人数
+6,731
+昨日
+2.64万
+同行标杆
+6,830
+成交人数
+792
+昨日
+3,144
+同行顶尖
+3,158
+退款金额（退款时间）
+¥630.14
+昨日
+¥2,480.43
+同行标杆
+¥276.88
+退款金额（支付时间）
+¥552.60
+昨日
+¥2,287.59
+同行基准
+¥423.62
+退款率（支付时间）
+26.91%
+昨日
+25.81%
+同行基准
+10.23%
+成交退款金额（退款时间）
+¥705.57
+昨日
+¥2,768.35
+同行标杆
+¥291.01
+退款订单数（退款时间）
+306
+昨日
+1,167
+同行基准
+58
+退款订单数（支付时间）
+272
+昨日
+1,087
+同行基准
+31
+商品曝光-点击转化率（人数）
+4.24%
+昨日
+4.13%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+11.77%
+昨日
+11.91%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:21:57,1239.334,九玥优选百货,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:22:04,1245.908,九玥优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:22:09,1251.386,九玥优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:22:11,1252.456,九玥优选百货,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:22:13,1255.141,九玥优选百货,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:22:15,1257.238,九玥优选百货,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\九玥优选百货_DL202604231022113199969281.csv,是
+2026-04-23 10:22:19,1260.871,九玥优选百货,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:22:23,1264.661,九玥优选百货,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:22:25,1266.710,九玥优选百货,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:22:38,1280.389,九玥优选百货,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:22:40,1281.893,九玥优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:22:54,1295.587,九玥优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:22:54,1296.136,九玥优选百货,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:23:00,1302.326,九玥优选百货,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\九玥优选百货_售后单-2026-04-23 10_23_00.xlsx,是
+2026-04-23 10:23:04,1305.482,九玥优选百货,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1795930896967684&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:23:09,1310.941,九玥优选百货,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:23:13,1314.710,九玥优选百货,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,146.49  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:23:14,1315.570,九玥优选百货,qianchuan_home_cost_roi,field,净成交ROI,extract:text,57.00  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:23:14,1315.979,九玥优选百货,qianchuan_home_cost_roi,field,净成交订单数,extract:text,2671  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:23:15,1317.000,小雅饰品供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:23:28,1330.221,小雅饰品供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 小雅饰品供应链（CSS 流程）,是
+2026-04-23 10:23:32,1334.079,小雅饰品供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:24:09,1370.666,小雅饰品供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:24:12,1373.638,小雅饰品供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,485.42
+昨日
+¥5,625.18
+同行基准
+¥4,431.99
+用户支付金额
+¥1,024.27
+昨日
+¥3,866.99
+同行基准
+¥4,130.38
+结算金额
+¥1,383.80
+昨日
+¥5,198.79
+同行基准
+¥3,933.4
+成交订单数
+330
+昨日
+1,206
+同行标杆
+915
+商品曝光人数
+13.79
+万
+昨日
+50.55万
+同行标杆
+20.7万
+商品点击人数
+4,379
+昨日
+1.54万
+同行标杆
+6,830
+客单价
+¥3.20
+昨日
+¥3.44
+同行基准
+¥20.5
+成交人数
+320
+昨日
+1,123
+同行标杆
+763
+退款金额（退款时间）
+¥173.68
+昨日
+¥488.41
+同行顶尖
+¥0
+退款金额（支付时间）
+¥80.04
+昨日
+¥363.56
+同行顶尖
+¥0
+退款率（支付时间）
+7.81%
+昨日
+9.4%
+同行标杆
+5.41%
+成交退款金额（退款时间）
+¥200.45
+昨日
+¥593.25
+同行顶尖
+¥0
+退款订单数（退款时间）
+41
+昨日
+132
+同行标杆
+11
+退款订单数（支付时间）
+22
+昨日
+83
+同行标杆
+4
+商品曝光-点击转化率（人数）
+3.18%
+昨日
+3.04%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+7.31%
+昨日
+7.31%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:24:14,1375.789,小雅饰品供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:24:20,1382.280,小雅饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:24:26,1387.751,小雅饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:24:27,1388.817,小雅饰品供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:24:30,1391.516,小雅饰品供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:24:32,1393.799,小雅饰品供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\小雅饰品供应链_DL202604231024287417113601.csv,是
+2026-04-23 10:24:36,1397.801,小雅饰品供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:24:40,1401.992,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:24:42,1403.866,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:24:56,1417.503,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:24:57,1418.933,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:25:11,1432.694,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:25:11,1433.241,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:25:18,1439.624,小雅饰品供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\小雅饰品供应链_售后单-2026-04-23 10_25_17.xlsx,是
+2026-04-23 10:25:21,1442.796,小雅饰品供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1860145433022476&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:25:26,1448.153,小雅饰品供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:25:30,1451.919,小雅饰品供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,176.69  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:25:31,1453.359,小雅饰品供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,28.27  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:25:32,1454.120,小雅饰品供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,1083  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:25:33,1455.002,木菁饰品供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:25:46,1467.432,木菁饰品供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 木菁饰品供应链（CSS 流程）,是
+2026-04-23 10:25:49,1470.910,木菁饰品供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:26:26,1507.446,木菁饰品供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:26:28,1510.393,木菁饰品供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥811.52
+昨日
+¥1,967.32
+同行标杆
+¥1,787
+用户支付金额
+¥527.22
+昨日
+¥1,228.98
+同行基准
+¥544.96
+客单价
+¥2.98
+昨日
+¥2.47
+同行基准
+¥15.96
+成交订单数
+180
+昨日
+503
+同行顶尖
+2,449
+结算金额
+¥759.08
+昨日
+¥1,855.14
+同行标杆
+¥1,595.6
+商品曝光人数
+2.49
+万
+昨日
+8.3万
+同行标杆
+4.76万
+商品点击人数
+1,437
+昨日
+5,100
+同行标杆
+1,631
+成交人数
+177
+昨日
+498
+同行顶尖
+1,977
+退款金额（退款时间）
+¥55.91
+昨日
+¥114.30
+同行标杆
+¥16.3
+退款金额（支付时间）
+¥45.89
+昨日
+¥98.74
+同行标杆
+¥0
+退款率（支付时间）
+8.7%
+昨日
+8.03%
+同行标杆
+0%
+成交退款金额（退款时间）
+¥66.92
+昨日
+¥132.41
+同行标杆
+¥17.33
+退款订单数（退款时间）
+25
+昨日
+46
+同行基准
+7
+退款订单数（支付时间）
+18
+昨日
+38
+同行基准
+4
+商品曝光-点击转化率（人数）
+5.78%
+昨日
+6.15%
+同行标杆
+21.5%
+商品点击-成交转化率（人数）
+12.32%
+昨日
+9.76%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:26:30,1512.023,木菁饰品供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:26:37,1518.491,木菁饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:26:42,1524.051,木菁饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:26:43,1525.088,木菁饰品供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:26:46,1527.776,木菁饰品供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:26:48,1529.968,木菁饰品供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\木菁饰品供应链_DL202604231026311107329587.csv,是
+2026-04-23 10:26:52,1533.567,木菁饰品供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:26:56,1537.574,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:26:57,1539.356,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:27:11,1552.985,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:27:12,1554.409,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:27:26,1568.083,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:27:27,1568.632,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:27:33,1574.851,木菁饰品供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\木菁饰品供应链_售后单-2026-04-23 10_27_33.xlsx,是
+2026-04-23 10:27:36,1578.040,木菁饰品供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1837608358927172&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:27:41,1583.410,木菁饰品供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:27:45,1587.171,木菁饰品供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,0.00  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:27:46,1588.017,木菁饰品供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,"整体支付ROI
+--
+--  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",是
+2026-04-23 10:27:47,1588.433,木菁饰品供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,0  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:27:48,1589.629,好心情优选百货,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:28:01,1602.706,好心情优选百货,globalAccountLoop,account,switch,switchAccount,已切换店铺: 好心情优选百货（CSS 流程）,是
+2026-04-23 10:28:04,1605.793,好心情优选百货,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:28:41,1642.724,好心情优选百货,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:28:44,1645.656,好心情优选百货,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,040.84
+昨日
+¥4,325.58
+同行基准
+¥4,431.99
+用户支付金额
+¥841.37
+昨日
+¥3,561.45
+同行基准
+¥4,130.38
+客单价
+¥3.43
+昨日
+¥3.50
+同行基准
+¥20.5
+成交订单数
+258
+昨日
+1,057
+同行基准
+267
+结算金额
+¥941.55
+昨日
+¥3,948.15
+同行基准
+¥3,933.4
+商品曝光人数
+6.99
+万
+昨日
+32.24万
+同行标杆
+20.7万
+商品点击人数
+2,553
+昨日
+1.1万
+同行标杆
+6,830
+成交人数
+245
+昨日
+1,018
+同行标杆
+763
+退款金额（退款时间）
+¥133.05
+昨日
+¥506.98
+同行顶尖
+¥0
+退款金额（支付时间）
+¥90.94
+昨日
+¥364.76
+同行顶尖
+¥0
+退款率（支付时间）
+10.81%
+昨日
+10.24%
+同行基准
+10.23%
+成交退款金额（退款时间）
+¥143.35
+昨日
+¥521.76
+同行顶尖
+¥0
+退款订单数（退款时间）
+34
+昨日
+146
+同行标杆
+11
+退款订单数（支付时间）
+23
+昨日
+103
+同行标杆
+4
+商品曝光-点击转化率（人数）
+3.65%
+昨日
+3.4%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+9.6%
+昨日
+9.28%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:28:45,1647.179,好心情优选百货,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:28:52,1653.565,好心情优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:28:57,1659.053,好心情优选百货,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:28:58,1660.135,好心情优选百货,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:29:01,1662.827,好心情优选百货,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:29:03,1665.174,好心情优选百货,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\好心情优选百货_DL202604231028511933574938.csv,是
+2026-04-23 10:29:07,1668.879,好心情优选百货,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:29:11,1672.673,好心情优选百货,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:29:13,1674.554,好心情优选百货,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:29:26,1688.198,好心情优选百货,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:29:28,1689.619,好心情优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:29:41,1703.304,好心情优选百货,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:29:42,1703.861,好心情优选百货,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:29:48,1710.219,好心情优选百货,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\好心情优选百货_售后单-2026-04-23 10_29_48.xlsx,是
+2026-04-23 10:29:51,1713.382,好心情优选百货,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1801187430806539&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:29:57,1718.565,好心情优选百货,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:30:00,1722.324,好心情优选百货,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,62.20  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:30:01,1723.149,好心情优选百货,qianchuan_home_cost_roi,field,净成交ROI,extract:text,44.66  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:30:02,1723.562,好心情优选百货,qianchuan_home_cost_roi,field,净成交订单数,extract:text,674  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:30:03,1724.634,甑维居家日用,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:30:16,1738.195,甑维居家日用,globalAccountLoop,account,switch,switchAccount,已切换店铺: 甑维居家日用（CSS 流程）,是
+2026-04-23 10:30:20,1742.295,甑维居家日用,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:30:57,1778.774,甑维居家日用,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:31:00,1781.687,甑维居家日用,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,706.71
+昨日
+¥4,226.81
+同行标杆
+¥1,787
+用户支付金额
+¥1,571.87
+昨日
+¥3,929.94
+同行标杆
+¥1,674.08
+客单价
+¥5.36
+昨日
+¥6.39
+同行基准
+¥15.96
+成交订单数
+295
+昨日
+620
+同行顶尖
+2,449
+结算金额
+¥1,458.21
+昨日
+¥3,763.22
+同行标杆
+¥1,595.6
+商品曝光人数
+3.95
+万
+昨日
+13.57万
+同行标杆
+4.76万
+商品点击人数
+1,390
+昨日
+4,569
+同行标杆
+1,631
+成交人数
+293
+昨日
+615
+同行顶尖
+1,977
+退款金额（退款时间）
+¥258.63
+昨日
+¥562.11
+同行基准
+¥85.22
+退款金额（支付时间）
+¥240.37
+昨日
+¥458.91
+同行基准
+¥48
+退款率（支付时间）
+15.29%
+昨日
+11.68%
+同行基准
+8.78%
+成交退款金额（退款时间）
+¥267.76
+昨日
+¥575.64
+同行基准
+¥88.56
+退款订单数（退款时间）
+45
+昨日
+108
+同行基准
+7
+退款订单数（支付时间）
+41
+昨日
+80
+同行基准
+4
+商品曝光-点击转化率（人数）
+3.52%
+昨日
+3.37%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+21.08%
+昨日
+13.46%
+同行标杆
+21.66%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:31:01,1783.187,甑维居家日用,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:31:08,1789.512,甑维居家日用,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:31:13,1795.047,甑维居家日用,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:31:14,1796.090,甑维居家日用,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:31:17,1798.777,甑维居家日用,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:31:19,1801.098,甑维居家日用,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\甑维居家日用_DL202604231031150492692481.csv,是
+2026-04-23 10:31:23,1804.749,甑维居家日用,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:31:27,1808.951,甑维居家日用,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:31:29,1811.001,甑维居家日用,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:31:43,1824.656,甑维居家日用,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:31:44,1826.102,甑维居家日用,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:31:58,1839.774,甑维居家日用,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:31:58,1840.300,甑维居家日用,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:32:05,1846.560,甑维居家日用,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\甑维居家日用_售后单-2026-04-23 10_32_04.xlsx,是
+2026-04-23 10:32:08,1849.733,甑维居家日用,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1851772246680588&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:32:13,1855.061,甑维居家日用,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:32:17,1858.826,甑维居家日用,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,611.10  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:32:18,1859.681,甑维居家日用,qianchuan_home_cost_roi,field,净成交ROI,extract:text,6.77  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:32:18,1860.103,甑维居家日用,qianchuan_home_cost_roi,field,净成交订单数,extract:text,601  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:32:19,1861.022,奈斯甑选,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:32:35,1876.622,奈斯甑选,globalAccountLoop,account,switch,switchAccount,已切换店铺: 奈斯甑选（CSS 流程）,是
+2026-04-23 10:32:39,1880.466,奈斯甑选,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:33:15,1917.337,奈斯甑选,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:33:18,1920.271,奈斯甑选,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥2,246.36
+昨日
+¥7,914.47
+同行基准
+¥4,431.99
+用户支付金额
+¥1,901.20
+昨日
+¥6,781.34
+同行基准
+¥4,130.38
+客单价
+¥3.55
+昨日
+¥3.61
+同行基准
+¥20.5
+成交订单数
+546
+昨日
+1,931
+同行标杆
+915
+结算金额
+¥2,155.09
+昨日
+¥7,472.35
+同行基准
+¥3,933.4
+商品曝光人数
+8.21
+万
+昨日
+33.83万
+同行标杆
+20.7万
+商品点击人数
+3,967
+昨日
+1.53万
+同行标杆
+6,830
+成交人数
+536
+昨日
+1,877
+同行标杆
+763
+退款金额（退款时间）
+¥115.83
+昨日
+¥563.70
+同行顶尖
+¥0
+退款金额（支付时间）
+¥85.94
+昨日
+¥410.58
+同行顶尖
+¥0
+退款率（支付时间）
+4.52%
+昨日
+6.05%
+同行顶尖
+0%
+成交退款金额（退款时间）
+¥126.52
+昨日
+¥603.49
+同行顶尖
+¥0
+退款订单数（退款时间）
+36
+昨日
+162
+同行标杆
+11
+退款订单数（支付时间）
+24
+昨日
+108
+同行标杆
+4
+商品曝光-点击转化率（人数）
+4.83%
+昨日
+4.53%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+13.51%
+昨日
+12.26%
+同行标杆
+26.74%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:33:20,1921.613,奈斯甑选,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:33:53,1954.939,奈斯甑选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,"auxoCalendarPick: 点击日期容器失败: Locator.wait_for: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(""#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-search.auxo-pro-table-search-query-filter > form > div > div > div:nth-child(1) > div > div > div > div > div > div > div > span > div.auxo-picker.auxo-picker-range"").first to be visible
+",否
+2026-04-23 10:34:03,1965.146,奈斯甑选,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,"Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator(""#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button"").first to be visible
+    - waiting for"" https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill"" navigation to finish...
+    - navigated to ""https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill""
+",否
+2026-04-23 10:34:23,1985.362,奈斯甑选,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,"Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator(""div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary"").first to be visible
+",否
+2026-04-23 10:34:27,1988.891,奈斯甑选,fxg_bill_history_report,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:34:30,1992.272,奈斯甑选,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\奈斯甑选_DL202604221117321457082931.csv,是
+2026-04-23 10:34:35,1996.611,奈斯甑选,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:34:38,2000.416,奈斯甑选,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:34:40,2002.263,奈斯甑选,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:34:54,2015.901,奈斯甑选,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:34:55,2017.362,奈斯甑选,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:35:09,2031.069,奈斯甑选,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:35:10,2031.654,奈斯甑选,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:35:16,2037.942,奈斯甑选,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\奈斯甑选_售后单-2026-04-23 10_35_16.xlsx,是
+2026-04-23 10:35:19,2041.121,奈斯甑选,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1799909532072976&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:35:25,2046.534,奈斯甑选,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:35:28,2050.302,奈斯甑选,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,240.93  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:35:29,2051.169,奈斯甑选,qianchuan_home_cost_roi,field,净成交ROI,extract:text,30.18  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:35:30,2051.576,奈斯甑选,qianchuan_home_cost_roi,field,净成交订单数,extract:text,1780  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:35:31,2052.551,一阳饰品屋,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:35:44,2065.894,一阳饰品屋,globalAccountLoop,account,switch,switchAccount,已切换店铺: 一阳饰品屋（CSS 流程）,是
+2026-04-23 10:35:49,2070.533,一阳饰品屋,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:36:26,2107.844,一阳饰品屋,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:36:29,2110.830,一阳饰品屋,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥660.92
+昨日
+¥1,870.08
+同行标杆
+¥1,787
+用户支付金额
+¥533.25
+昨日
+¥1,419.33
+同行基准
+¥544.96
+结算金额
+¥604.54
+昨日
+¥1,736.22
+同行标杆
+¥1,595.6
+成交订单数
+150
+昨日
+441
+同行标杆
+167
+商品曝光人数
+4.71
+万
+昨日
+24.54万
+同行标杆
+4.76万
+商品点击人数
+1,708
+昨日
+6,889
+同行顶尖
+1.7万
+客单价
+¥3.60
+昨日
+¥3.40
+同行基准
+¥15.96
+成交人数
+148
+昨日
+417
+同行顶尖
+1,977
+退款金额（退款时间）
+¥71.90
+昨日
+¥185.93
+同行标杆
+¥16.3
+退款金额（支付时间）
+¥56.29
+昨日
+¥114.23
+同行基准
+¥48
+退款率（支付时间）
+10.56%
+昨日
+8.05%
+同行基准
+8.78%
+成交退款金额（退款时间）
+¥71.99
+昨日
+¥214.60
+同行标杆
+¥17.33
+退款订单数（退款时间）
+16
+昨日
+55
+同行基准
+7
+退款订单数（支付时间）
+12
+昨日
+33
+同行基准
+4
+商品曝光-点击转化率（人数）
+3.63%
+昨日
+2.81%
+同行基准
+5.19%
+商品点击-成交转化率（人数）
+8.67%
+昨日
+6.05%
+同行基准
+9.04%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:36:30,2112.365,一阳饰品屋,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:36:37,2119.020,一阳饰品屋,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:36:43,2124.554,一阳饰品屋,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:36:44,2125.596,一阳饰品屋,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:36:46,2128.295,一阳饰品屋,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:36:49,2130.552,一阳饰品屋,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\一阳饰品屋_DL202604231036442860966913.csv,是
+2026-04-23 10:36:52,2134.297,一阳饰品屋,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:36:56,2138.142,一阳饰品屋,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:36:58,2140.395,一阳饰品屋,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:37:12,2154.054,一阳饰品屋,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:37:14,2155.486,一阳饰品屋,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:37:27,2169.169,一阳饰品屋,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:37:28,2169.683,一阳饰品屋,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:37:34,2175.881,一阳饰品屋,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\一阳饰品屋_售后单-2026-04-23 10_37_34.xlsx,是
+2026-04-23 10:37:37,2179.065,一阳饰品屋,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1859167906044940&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:37:42,2184.383,一阳饰品屋,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:37:46,2188.156,一阳饰品屋,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,100.82  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:37:47,2189.018,一阳饰品屋,qianchuan_home_cost_roi,field,净成交ROI,extract:text,16.07  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:37:48,2189.440,一阳饰品屋,qianchuan_home_cost_roi,field,净成交订单数,extract:text,391  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:37:49,2190.759,森蝶发饰供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:38:02,2203.733,森蝶发饰供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 森蝶发饰供应链（CSS 流程）,是
+2026-04-23 10:38:06,2207.851,森蝶发饰供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:38:42,2244.305,森蝶发饰供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:38:45,2247.180,森蝶发饰供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,129.81
+昨日
+¥4,566.01
+同行基准
+¥4,431.99
+用户支付金额
+¥1,031.24
+昨日
+¥4,111.81
+同行基准
+¥4,130.38
+客单价
+¥4.56
+昨日
+¥4.59
+同行基准
+¥20.5
+成交订单数
+228
+昨日
+936
+同行基准
+267
+结算金额
+¥1,063.70
+昨日
+¥4,208.28
+同行基准
+¥3,933.4
+商品曝光人数
+5.74
+万
+昨日
+21.64万
+同行标杆
+20.7万
+商品点击人数
+2,234
+昨日
+8,286
+同行标杆
+6,830
+成交人数
+226
+昨日
+895
+同行标杆
+763
+退款金额（退款时间）
+¥95.18
+昨日
+¥439.13
+同行顶尖
+¥0
+退款金额（支付时间）
+¥63.26
+昨日
+¥347.32
+同行顶尖
+¥0
+退款率（支付时间）
+6.13%
+昨日
+8.45%
+同行标杆
+5.41%
+成交退款金额（退款时间）
+¥100.63
+昨日
+¥458.15
+同行顶尖
+¥0
+退款订单数（退款时间）
+24
+昨日
+96
+同行标杆
+11
+退款订单数（支付时间）
+14
+昨日
+66
+同行标杆
+4
+商品曝光-点击转化率（人数）
+3.89%
+昨日
+3.83%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+10.12%
+昨日
+10.8%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:38:47,2248.738,森蝶发饰供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:38:53,2255.200,森蝶发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:38:59,2260.658,森蝶发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:39:00,2261.697,森蝶发饰供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:39:02,2264.401,森蝶发饰供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:39:06,2267.465,森蝶发饰供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\森蝶发饰供应链_DL202604231038563468706560.csv,是
+2026-04-23 10:39:09,2271.040,森蝶发饰供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:39:13,2275.193,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:39:15,2277.048,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:39:29,2290.720,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:39:30,2292.199,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:39:44,2305.883,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:39:45,2306.435,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:39:51,2312.724,森蝶发饰供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\森蝶发饰供应链_售后单-2026-04-23 10_39_51.xlsx,是
+2026-04-23 10:39:54,2315.901,森蝶发饰供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1817758973806667&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:40:00,2321.444,森蝶发饰供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:40:03,2325.214,森蝶发饰供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,190.20  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:40:05,2326.615,森蝶发饰供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,21.55  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:40:05,2327.367,森蝶发饰供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,843  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:40:06,2328.325,无糖发饰供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:40:22,2343.758,无糖发饰供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 无糖发饰供应链（CSS 流程）,是
+2026-04-23 10:40:25,2346.646,无糖发饰供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:41:02,2383.703,无糖发饰供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:41:05,2386.630,无糖发饰供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥1,164.04
+昨日
+¥4,462.63
+同行基准
+¥4,431.99
+用户支付金额
+¥936.15
+昨日
+¥3,732.99
+同行基准
+¥4,130.38
+客单价
+¥3.67
+昨日
+¥4.13
+同行基准
+¥20.5
+成交订单数
+260
+昨日
+934
+同行基准
+267
+结算金额
+¥1,082.87
+昨日
+¥4,092.44
+同行基准
+¥3,933.4
+商品曝光人数
+6.44
+万
+昨日
+23.73万
+同行标杆
+20.7万
+商品点击人数
+2,628
+昨日
+9,025
+同行标杆
+6,830
+成交人数
+255
+昨日
+903
+同行标杆
+763
+退款金额（退款时间）
+¥90.58
+昨日
+¥424.42
+同行顶尖
+¥0
+退款金额（支付时间）
+¥73.28
+昨日
+¥335.68
+同行顶尖
+¥0
+退款率（支付时间）
+7.83%
+昨日
+8.99%
+同行标杆
+5.41%
+成交退款金额（退款时间）
+¥106.90
+昨日
+¥461.74
+同行顶尖
+¥0
+退款订单数（退款时间）
+28
+昨日
+92
+同行标杆
+11
+退款订单数（支付时间）
+21
+昨日
+73
+同行标杆
+4
+商品曝光-点击转化率（人数）
+4.08%
+昨日
+3.8%
+同行基准
+6.24%
+商品点击-成交转化率（人数）
+9.7%
+昨日
+10.01%
+同行基准
+12.2%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:41:06,2387.985,无糖发饰供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:41:39,2421.323,无糖发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,"auxoCalendarPick: 点击日期容器失败: Locator.wait_for: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(""#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-search.auxo-pro-table-search-query-filter > form > div > div > div:nth-child(1) > div > div > div > div > div > div > div > span > div.auxo-picker.auxo-picker-range"").first to be visible
+    - waiting for"" https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill"" navigation to finish...
+    - navigated to ""https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill""
+",否
+2026-04-23 10:41:50,2432.238,无糖发饰供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,"Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator(""#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button"").first to be visible
+",否
+2026-04-23 10:42:11,2452.437,无糖发饰供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,"Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator(""div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary"").first to be visible
+",否
+2026-04-23 10:42:14,2455.967,无糖发饰供应链,fxg_bill_history_report,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:42:17,2458.941,无糖发饰供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\无糖发饰供应链_DL202604221123281191183147.csv,是
+2026-04-23 10:42:21,2462.608,无糖发饰供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:42:24,2466.365,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:42:26,2468.216,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:42:40,2481.889,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:42:41,2483.350,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:42:55,2497.049,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:42:56,2497.576,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:43:02,2503.857,无糖发饰供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\无糖发饰供应链_售后单-2026-04-23 10_43_02.xlsx,是
+2026-04-23 10:43:05,2507.035,无糖发饰供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1838244156864519&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:43:11,2512.483,无糖发饰供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:43:14,2516.248,无糖发饰供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,94.23  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:43:15,2517.102,无糖发饰供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,35.58  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:43:16,2517.526,无糖发饰供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,650  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:43:17,2518.448,小志饰品供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:43:30,2532.408,小志饰品供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 小志饰品供应链（CSS 流程）,是
+2026-04-23 10:43:34,2535.522,小志饰品供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:44:11,2572.950,小志饰品供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:44:14,2575.896,小志饰品供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥175.05
+昨日
+¥362.70
+同行顶尖
+¥2,727.6
+用户支付金额
+¥32.51
+昨日
+¥123.91
+同行基准
+¥41.21
+客单价
+¥0.56
+昨日
+¥1.23
+同行基准
+¥9.87
+成交订单数
+58
+昨日
+113
+同行顶尖
+702
+结算金额
+¥164.89
+昨日
+¥330.82
+同行顶尖
+¥2,676.02
+商品曝光人数
+2.34
+万
+昨日
+3.63万
+同行顶尖
+28.88万
+商品点击人数
+648
+昨日
+1,241
+同行顶尖
+6,658
+成交人数
+58
+昨日
+101
+同行顶尖
+473
+退款金额（退款时间）
+¥3.39
+昨日
+¥26.14
+同行标杆
+¥0
+退款金额（支付时间）
+¥3.39
+昨日
+¥26.14
+同行基准
+¥0
+退款率（支付时间）
+10.43%
+昨日
+21.1%
+同行基准
+0%
+成交退款金额（退款时间）
+¥10.16
+昨日
+¥31.88
+同行基准
+¥5.49
+退款订单数（退款时间）
+2
+昨日
+13
+同行基准
+1
+退款订单数（支付时间）
+2
+昨日
+13
+同行基准
+0
+商品曝光-点击转化率（人数）
+2.77%
+昨日
+3.42%
+同行基准
+4.39%
+商品点击-成交转化率（人数）
+8.95%
+昨日
+8.14%
+同行标杆
+14.88%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:44:16,2577.533,小志饰品供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:44:22,2584.000,小志饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:44:28,2589.746,小志饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:44:29,2590.892,小志饰品供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:44:32,2593.644,小志饰品供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:44:34,2596.232,小志饰品供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\小志饰品供应链_DL202604231044222055209747.csv,是
+2026-04-23 10:44:38,2600.120,小志饰品供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:44:42,2604.087,小志饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:44:44,2606.249,小志饰品供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:44:58,2619.932,小志饰品供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:44:59,2621.363,小志饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:45:13,2635.055,小志饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:45:14,2635.567,小志饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:46:25,2707.081,小志饰品供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,"Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator(""#orderAppContainer > div > div.styles_searchForm__wpWhK > div.styles_footer__PvqkY > button:nth-child(6)"").first to be visible
+",否
+2026-04-23 10:46:28,2709.952,小志饰品供应链,qianchuan_home_cost_roi,account,skip_qianchuan,no_qianchuan_id,本店未配置千川ID，跳过千川页导航与切户，指标写入 None,是
+2026-04-23 10:46:28,2709.979,小志饰品供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,None（未配置千川ID，跳过千川页）,是
+2026-04-23 10:46:28,2710.002,小志饰品供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,None（未配置千川ID，跳过千川页）,是
+2026-04-23 10:46:28,2710.027,小志饰品供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,None（未配置千川ID，跳过千川页）,是
+2026-04-23 10:46:29,2711.097,艾佳甑选百货,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:47:07,2748.952,艾佳甑选百货,globalAccountLoop,account,switch,switchAccount,"打开切店弹窗失败（openSwitchModalSelector）: Locator.wait_for: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator(""#fxg-pc-header > div > div.nav-menu_rightBar__2FmVk > div.index_wrapper__11Lcd > div > div:nth-child(4) > div > div > div > div.auxo-popover-inner > div > div > div > div > div:nth-child(6) > div > div"").first to be visible
+    44 × locator resolved to hidden <div class=""index_descTitle__IpE5P"">切换组织/店铺</div>
+",否
+2026-04-23 10:47:09,2750.441,念念饰品供应链,globalAccountLoop,nav,goto,open_url,https://fxg.jinritemai.com/ffa/mshop/homepage/index,是
+2026-04-23 10:47:21,2762.681,念念饰品供应链,globalAccountLoop,account,switch,switchAccount,已切换店铺: 念念饰品供应链（CSS 流程）,是
+2026-04-23 10:47:25,2766.739,念念饰品供应链,fxg_mshop_home,nav,goto,open_url,https://compass.jinritemai.com/shop,是
+2026-04-23 10:48:02,2803.819,念念饰品供应链,fxg_mshop_home,interaction,fxg_home_close_desktop_ad,click,"Locator.wait_for: Timeout 3500ms exceeded.
+Call log:
+  - waiting for locator(""div[role='dialog'] .auxo-modal-close-x"").first to be visible
+",否
+2026-04-23 10:48:05,2806.735,念念饰品供应链,fxg_mshop_home,field,经营概况整块文本,extract:text,"成交金额
+¥0.00
+昨日
+¥0.00
+同行基准
+¥1.82万
+用户支付金额
+¥0.00
+昨日
+¥0.00
+同行基准
+¥1.75万
+客单价
+-
+昨日
+-
+成交订单数
+-
+昨日
+-
+结算金额
+¥0.00
+昨日
+¥0.00
+同行基准
+¥1.59万
+商品曝光人数
+1,945
+昨日
+7,847
+同行基准
+2.81万
+商品点击人数
+82
+昨日
+334
+同行基准
+3,683
+成交人数
+0
+昨日
+0
+同行基准
+626
+退款金额（退款时间）
+¥13.95
+昨日
+¥61.22
+同行顶尖
+¥200.8
+退款金额（支付时间）
+¥0.00
+昨日
+-
+同行顶尖
+¥0
+退款率（支付时间）
+0%
+昨日
+0%
+同行顶尖
+0%
+成交退款金额（退款时间）
+¥18.01
+昨日
+¥61.22
+同行顶尖
+¥201.5
+退款订单数（退款时间）
+5
+昨日
+14
+同行顶尖
+4
+退款订单数（支付时间）
+-
+昨日
+-
+商品曝光-点击转化率（人数）
+4.22%
+昨日
+4.26%
+同行基准
+10.63%
+商品点击-成交转化率（人数）
+0%
+昨日
+0%
+同行基准
+13.83%  ← #root > div.homepageWrapper-zxLmZT > div > dynamic-module-wrapper:nth-child(1) > div > div > div.coreContent-J7jCZG > div.businessDataWrap-LUgNmI > div:nth-child(1) > div > div.ecom-spin-nested-loading > div > div:nth-child(1)",是
+2026-04-23 10:48:06,2808.157,念念饰品供应链,fxg_aftersale_fund_detail_bill,nav,goto,open_url,https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill,是
+2026-04-23 10:48:13,2814.933,念念饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_date_range,dateRange,auxoCalendarPick: 已点选起止均为 2026-04-22,是
+2026-04-23 10:48:18,2820.402,念念饰品供应链,fxg_aftersale_fund_detail_bill,interaction,fund_detail_click_generate_report,click,#rc-tabs-0-panel-FUND_DETAIL_BILL > div > div.auxo-pro-table.custom-style-gray.auxo-pro-table-combined > div.auxo-pro-table-wrapper > div > div.auxo-pro-table-list-toolbar > div > div.auxo-space.auxo-space-horizontal.auxo-space-align-center.auxo-pro-table-list-toolbar-right > div > div > div > button,是
+2026-04-23 10:48:20,2821.440,念念饰品供应链,fxg_aftersale_fund_detail_bill,interaction,confirm_fund_detail_generate,click,div.auxo-popover-inner div.auxo-popover-buttons button.auxo-btn-primary.auxo-btn-sm,是
+2026-04-23 10:48:22,2824.151,念念饰品供应链,fxg_bill_history_report,nav,goto,skip_same_url,https://fxg.jinritemai.com/ffa/fxg-bill/history-report,是
+2026-04-23 10:48:24,2826.347,念念饰品供应链,fxg_bill_history_report,interaction,export_bill_history_top,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\念念饰品供应链_DL202604231048208383673345.csv,是
+2026-04-23 10:48:28,2830.380,念念饰品供应链,fxg_aftersale_order_list_export,nav,goto,open_url,https://fxg.jinritemai.com/ffa/merchant-aftersale-workbench/aftersale/list,是
+2026-04-23 10:48:32,2834.175,念念饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_expand_search_footer,click,#root > div > div:nth-child(1) > div[class*='searchForm'] > div[class*='footer'] > button[class*='aurora-btn-text'],是
+2026-04-23 10:48:34,2836.350,念念饰品供应链,fxg_aftersale_order_list_export,interaction,refund_success,selectFilter,已选择「退款成功」（候选: 退款成功）,是
+2026-04-23 10:48:48,2850.064,念念饰品供应链,fxg_aftersale_order_list_export,interaction,shipping_logistics_buyer_signed,selectFilter,已选择「买家已签收」（候选: 买家已签收）,是
+2026-04-23 10:48:50,2851.518,念念饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_type_completion,selectFilter,已选择「完结时间」（候选: 完结时间）,是
+2026-04-23 10:49:03,2865.234,念念饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_time_yesterday,selectFilter,已选择「昨日」（候选: 昨日、昨天）,是
+2026-04-23 10:49:04,2865.794,念念饰品供应链,fxg_aftersale_order_list_export,interaction,aftersale_footer_query,click,#root > div > div:nth-child(1) > div.searchForm-AfmcYB > div.footer-rxnRYg > button.aurora-btn.css-al7m4l.css-var-root.aurora-btn-secondary.aurora-btn-color-primary.aurora-btn-variant-filled,是
+2026-04-23 10:49:10,2872.127,念念饰品供应链,fxg_aftersale_order_list_export,interaction,export_aftersale_orders,click+download,D:\Program Files (x86)\fff2_dianshang\output\抖店数据提取_20260423_100117_6e771c2b\downloads\念念饰品供应链_售后单-2026-04-23 10_49_10.xlsx,是
+2026-04-23 10:49:13,2875.307,念念饰品供应链,qianchuan_home_cost_roi,nav,goto,open_url,https://qianchuan.jinritemai.com/uni-prom?aavid=1811894639635532&ct=1&dr=2026-04-22%2C2026-04-22&uni=%7B%22uniTab%22%3A%22ad%22%7D,是
+2026-04-23 10:49:19,2880.706,念念饰品供应链,qianchuan_home_cost_roi,interaction,uni_prom_pick_push_product,click,#new_uni_prom_shop_guidance > div > span > span,是
+2026-04-23 10:49:23,2884.461,念念饰品供应链,qianchuan_home_cost_roi,field,整体消耗(元),extract:text,0.00  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.stat_cost_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
+2026-04-23 10:49:24,2885.911,念念饰品供应链,qianchuan_home_cost_roi,field,净成交ROI,extract:text,"整体支付ROI
+--
+--  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_prepay_and_pay_order_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block",是
+2026-04-23 10:49:25,2886.638,念念饰品供应链,qianchuan_home_cost_roi,field,净成交订单数,extract:text,0  ← #app-container > div.app-content > div.content-body.no-left > div > div.data-overview-wrapper > div > div > div > div > div.card.total_pay_order_count_for_roi2 > div > span > div > div.oc-statistic.oc-statistic-cursor.oc-statistic-bg-default.oc-statistic-block,是
