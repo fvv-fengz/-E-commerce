@@ -1,0 +1,21 @@
+# Conda offline bundle (often 100MB+; GitHub limit 100MB per file)
+conda_env_bundle.tar.gz
+
+# Runtime / local outputs
+output/
+dailydate/
+
+# Local env dirs
+conda_env/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.Python
+
+# Secrets / local config
+.env
+*.local.json
+
+# Node (if any)
+node_modules/
