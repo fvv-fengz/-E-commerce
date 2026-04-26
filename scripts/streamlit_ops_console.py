@@ -444,8 +444,8 @@ _PAGE_ID_CN_FALLBACK: Dict[str, str] = {
     # 抖店生态常见 page id
     "fxg_login_switch": "登录 / 切换店铺（入口页）",
     "fxg_mshop_home": "罗盘 · 店铺经营概况",
-    "fxg_aftersale_fund_detail_bill": "资金账单 · 生成报表",
-    "fxg_bill_history_report": "资金账单 · 历史报表下载",
+    "fxg_aftersale_fund_detail_bill": "资金账单全流程 · ① 生成报表",
+    "fxg_bill_history_report": "资金账单全流程 · ② 历史报表下载",
     "fxg_aftersale_order_list_export": "售后工作台 · 订单导出",
     "qianchuan_home_cost_roi": "巨量千川 · 推广成本 / ROI",
     # 拼多多（全店模板常见）
@@ -994,6 +994,7 @@ def _compile_pipeline_job(
     pdd_account_pack_rel: Optional[str],
     account_csv: str,
     selected_profile: Optional[dict],
+    selected_shop_names: Optional[List[str]],
     cdp: str,
     selected_modules: List[str],
     download_dir: str,
@@ -1031,6 +1032,14 @@ def _compile_pipeline_job(
             abort_on_fail=abort_on_fail,
             extra_args=trial_extra_args,
         )
+        picked_names = [
+            str(x).strip()
+            for x in (selected_shop_names or [])
+            if str(x).strip()
+        ]
+        if picked_names:
+            cmd_trial.extend(["--global-accounts", ",".join(picked_names)])
+            warnings.append(f"已按界面选择注入店铺：{len(picked_names)} 家")
         if (not _template_is_pdd(cfg)) and selected_profile and isinstance(selected_profile.get("accounts"), list):
             names = [
                 str(x.get("name") or "").strip()
@@ -1454,6 +1463,7 @@ selected_modules = st.multiselect(
 )
 
 selected_profile = None
+selected_shop_names: List[str] = []
 jinritemai_pack_rel = str(cfg.get("jinritemai_account_pack") or "").strip() or None
 pdd_account_pack_rel: Optional[str] = None
 account_csv = str(cfg.get("pdd_credential_csv") or "").strip()
@@ -1548,6 +1558,20 @@ if _template_is_pdd(cfg):
                 },
             )
             st.caption("可增加/删除行；店铺名与登录账号至少填一项时再保存。")
+            _pdd_name_opts = [
+                str(x.get("name") or "").strip()
+                for x in (pack_obj["profiles"].get(sel_pk) or [])
+                if isinstance(x, dict) and str(x.get("name") or "").strip()
+            ]
+            if _pdd_name_opts:
+                _pdd_name_opts = list(dict.fromkeys(_pdd_name_opts))
+                selected_shop_names = st.multiselect(
+                    "运行店铺（可多选，默认全选）",
+                    options=_pdd_name_opts,
+                    default=_pdd_name_opts,
+                    key=f"{_pdd_ns}_run_shops_{sel_pk}",
+                    help="仅运行勾选的店铺；不勾选则回退为账号包全部店铺。",
+                )
             if st.button("保存拼多多账号包", type="primary", key=f"{_pdd_ns}_save"):
                 try:
                     pack_obj["label"] = str(_pdd_label_in or "").strip()
@@ -1557,8 +1581,6 @@ if _template_is_pdd(cfg):
                     st.rerun()
                 except Exception as e:
                     st.error(str(e))
-            with st.expander("原始 JSON（高级）", expanded=False):
-                st.code(_read_text_fallback(pdd_path), language="json")
     else:
         st.warning(f"账号包文件不存在：`{pdd_account_pack_rel}`")
 elif _template_is_jinritemai(cfg):
@@ -1643,6 +1665,20 @@ elif _template_is_jinritemai(cfg):
                 },
             )
             st.caption("千川 ID 没有可留空；可增加/删除行。")
+            _dy_name_opts = [
+                str(x.get("name") or "").strip()
+                for x in (pack_dy["profiles"].get(sel_dk) or [])
+                if isinstance(x, dict) and str(x.get("name") or "").strip()
+            ]
+            if _dy_name_opts:
+                _dy_name_opts = list(dict.fromkeys(_dy_name_opts))
+                selected_shop_names = st.multiselect(
+                    "运行店铺（可多选，默认全选）",
+                    options=_dy_name_opts,
+                    default=_dy_name_opts,
+                    key=f"{_dy_ns}_run_shops_{sel_dk}",
+                    help="仅运行勾选的店铺；不勾选则回退为账号包全部店铺。",
+                )
             if st.button("保存抖音账号包", type="primary", key=f"{_dy_ns}_save"):
                 try:
                     pack_dy["label"] = str(_dy_label_in or "").strip()
@@ -1652,8 +1688,6 @@ elif _template_is_jinritemai(cfg):
                     st.rerun()
                 except Exception as e:
                     st.error(str(e))
-            with st.expander("原始 JSON（高级）", expanded=False):
-                st.code(_read_text_fallback(dy_path), language="json")
     else:
         st.warning(f"账号包文件不存在：`{jinritemai_pack_rel}`")
 else:
@@ -1953,6 +1987,7 @@ if pending_start or clicked:
                 pdd_account_pack_rel=pdd_account_pack_rel,
                 account_csv=account_csv,
                 selected_profile=selected_profile,
+                selected_shop_names=selected_shop_names,
                 cdp=(cdp or "").strip() or DEFAULT_CDP,
                 selected_modules=selected_modules,
                 download_dir=download_dir,

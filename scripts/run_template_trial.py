@@ -9,6 +9,7 @@
   3) dateRange：…；dateRangeStrategy=auxoCalendarPick：容器点不到、或已点开但日历面板未出现/选日失败时，若启用首页迂回（见下）则抖店首页 → 再回到资金账单 fund-detail-bill（selector 含 FUND_DETAIL_BILL 时保留同路径 query）后重试，最多多轮；否则容器阶段用 page.reload。启用条件：模板为 doc/scrape-template-jinritemai-v1.json，或页面 `auxoDateRangeRetryViaHome`:true，或交互步 `useHomeRoundtripOnAuxoCalendarMiss`:true。readonlyRangePickYesterday；readonlyRangeMinDisabledMinus2（最小灰死日 G → 点 G-2，可选 minDisabledFallbackToYesterday / postCalendarOpenWaitMs）；target.alternateOpenSelector 打开日历失败时依次再试。千川 promotion-modal-wrap 等见原说明。全局突发弹窗清理见 _try_dismiss_unexpected_overlays。
   4) selectFilter：…同上；可选 postSelectConfirmSelector + alternatePostSelectConfirmSelector（或 postSelectConfirmSelectors）：在点到 value 后**立即**点 Portal 内「确认」（避免与下一步 click 之间存在时序/浮层关闭问题）；可选 postSelectConfirmWaitVisibleMs、postSelectConfirmSkipScroll（默认 true，footer 按钮避免 scroll_into_view 超时）；可选 selectOptionClickTimeoutMs 延长在下拉内点选项的超时（默认 12000）。
   click：可选 skipScrollIntoView / noScrollBeforeClick；分页、菜单项在 portal 内时可跳过 scroll_into_view 避免 4s 超时。
+  click：可选 clickWaitForState：默认 visible；设为 attached 时仅等节点挂到 DOM（不等 layout 完全可见），waitVisibleTimeoutMs 可作挂树超时（脚本对 attached 允许低至 200ms，默认 2500）；适合抖店侧栏等父级已就绪、子项尚未 stable 可见时抢先点击。
   5) click（含 export 下载）：interactions[].continueOnFail 为 true 时，该步失败（含 preExport 轮询失败、click+download 失败）只记 CSV 行 ok=false，不中断试运行，继续后续 interaction / 下一 page id。
      拼多多售后「下载查询订单」在无符合条件数据时常不触发文件下载：可对含 export 的交互步设 optionalDownload=true，
      若 Playwright 仅表现为「等待 download 事件超时」等，则本步记为成功并附说明，不中断试运行。
@@ -2713,6 +2714,29 @@ def _network_plain_pick_scalar(values: list) -> Optional[str]:
     return None
 
 
+def _network_apply_value_format(picked: str, fmt: str) -> str:
+    """networkResponseCapture.valueFormatMap：支持 fixed2 / int 两类格式化。"""
+    s = str(picked or "").strip()
+    f = str(fmt or "").strip().lower()
+    if not s or not f:
+        return s
+    if f not in ("fixed2", "2dp", "twodecimal", "int", "integer"):
+        return s
+    try:
+        n = float(s.replace(",", ""))
+    except Exception:
+        sn = _first_number_text(s)
+        if not sn:
+            return s
+        try:
+            n = float(sn.replace(",", ""))
+        except Exception:
+            return s
+    if f in ("int", "integer"):
+        return str(int(round(n)))
+    return f"{n:.2f}"
+
+
 def _try_field_from_network_capture(
     page_cfg: Optional[dict], store: Optional[dict], fkey: str, yday: str = ""
 ) -> Tuple[str, str]:
@@ -2787,6 +2811,13 @@ def _try_field_from_network_capture(
                     candidates.append(row.get(leaf))
         picked = _network_plain_pick_scalar(candidates)
         if picked:
+            fmt_map = nrs.get("valueFormatMap") or nrs.get("numberFormatMap") or {}
+            if isinstance(fmt_map, dict):
+                fmt = fmt_map.get(fkey)
+                if fmt is None:
+                    fmt = fmt_map.get(str(fkey).strip())
+                if fmt:
+                    picked = _network_apply_value_format(picked, str(fmt))
             subs = nrs.get("urlSubstrings") or nrs.get("urlIncludes") or []
             if isinstance(subs, str):
                 subs = [subs]
@@ -2809,6 +2840,13 @@ def _try_field_from_network_capture(
     picked = _network_plain_pick_scalar(candidates)
     if not picked:
         return "", ""
+    fmt_map = nrs.get("valueFormatMap") or nrs.get("numberFormatMap") or {}
+    if isinstance(fmt_map, dict):
+        fmt = fmt_map.get(fkey)
+        if fmt is None:
+            fmt = fmt_map.get(str(fkey).strip())
+        if fmt:
+            picked = _network_apply_value_format(picked, str(fmt))
     subs = nrs.get("urlSubstrings") or nrs.get("urlIncludes") or []
     if isinstance(subs, str):
         subs = [subs]
@@ -2903,6 +2941,122 @@ def _network_capture_arm_if_step_matches(
     store.pop("raw", None)
     store.pop("payload", None)
     store["_phase"] = "armed"
+
+
+def _should_quick_exit_page_after_network_capture(
+    page_cfg: Optional[dict], store: Optional[dict]
+) -> bool:
+    """
+    轻量模式：当 pages[].networkResponseCapture.quickExitPageOnCaptured 为 true，
+    且已捕获到匹配响应（store['raw'] 或 store['payload']）后，本页立即结束。
+    """
+    if not isinstance(page_cfg, dict) or not isinstance(store, dict):
+        return False
+    nrs = page_cfg.get("networkResponseCapture")
+    if not isinstance(nrs, dict):
+        return False
+    if not bool(nrs.get("quickExitPageOnCaptured")):
+        return False
+    return (store.get("raw") is not None) or (store.get("payload") is not None)
+
+
+def _quick_exit_extract_network_fields(
+    *,
+    page_cfg: Optional[dict],
+    store: Optional[dict],
+    fields: Optional[list],
+    data_rows: Optional[list],
+    rows: list,
+    acct: str,
+    pid: str,
+    yday: str,
+) -> int:
+    """快速退出前，从 networkResponseCapture 为本页写入 text 指标。"""
+    if not isinstance(page_cfg, dict) or not isinstance(store, dict):
+        return 0
+    if not isinstance(fields, list):
+        return 0
+    nrs = page_cfg.get("networkResponseCapture")
+    if not isinstance(nrs, dict):
+        return 0
+    jmap = nrs.get("jsonPathMap") or {}
+    if not isinstance(jmap, dict) or not jmap:
+        return 0
+    ok_cnt = 0
+    missing_as_zero = bool(nrs.get("missingAsZero"))
+    fmt_map = nrs.get("valueFormatMap") or nrs.get("numberFormatMap") or {}
+    for f in fields:
+        if not isinstance(f, dict):
+            continue
+        fkey = str(f.get("key") or "").strip()
+        label = str(f.get("label") or fkey).strip()
+        if not fkey:
+            continue
+        if fkey not in jmap and str(fkey) not in jmap:
+            continue
+        ext = f.get("extract") if isinstance(f.get("extract"), dict) else {}
+        etype = str((ext.get("type") if isinstance(ext, dict) else "") or "text").strip()
+        if etype != "text":
+            continue
+        first_number_only = bool((ext.get("firstNumberOnly") if isinstance(ext, dict) else False))
+        net_text, net_detail = _try_field_from_network_capture(page_cfg, store, fkey, yday)
+        if net_text:
+            if first_number_only:
+                picked = _first_number_text(net_text)
+                if picked:
+                    net_text = picked
+            _append_data_row(
+                data_rows, account=acct, field_key=fkey, label=label, value=net_text
+            )
+            rows.append(
+                _result_row(
+                    page_id=pid,
+                    account=acct,
+                    phase="field",
+                    key=label or fkey,
+                    action="extract:text",
+                    detail=f"{net_text}  ← {net_detail} (quickExit)",
+                    ok=True,
+                )
+            )
+            ok_cnt += 1
+        else:
+            if missing_as_zero:
+                zero_val = "0"
+                if isinstance(fmt_map, dict):
+                    fmt = fmt_map.get(fkey)
+                    if fmt is None:
+                        fmt = fmt_map.get(str(fkey).strip())
+                    if fmt:
+                        zero_val = _network_apply_value_format("0", str(fmt))
+                _append_data_row(
+                    data_rows, account=acct, field_key=fkey, label=label, value=zero_val
+                )
+                rows.append(
+                    _result_row(
+                        page_id=pid,
+                        account=acct,
+                        phase="field",
+                        key=label or fkey,
+                        action="extract:text",
+                        detail=f"{zero_val}  ← quickExit 前未从 networkResponseCapture 取到值（missingAsZero=true）",
+                        ok=True,
+                    )
+                )
+                ok_cnt += 1
+            else:
+                rows.append(
+                    _result_row(
+                        page_id=pid,
+                        account=acct,
+                        phase="field",
+                        key=label or fkey,
+                        action="extract:text",
+                        detail="quickExit 前未从 networkResponseCapture 取到值",
+                        ok=False,
+                    )
+                )
+    return ok_cnt
 
 
 def _maybe_save_network_capture_response(
@@ -3909,18 +4063,30 @@ def _click_selector_chain(
     match_idx: Optional[int] = None,
     *,
     skip_scroll_into_view: bool = False,
+    wait_for_state: str = "visible",
 ) -> tuple:
-    """依次尝试；先等到可见再滚入视口后点击（避免 DOM 未就绪时 scroll_into_view 先超时）。
+    """依次尝试；默认等到 visible 再滚入视口后点击。
+    wait_for_state=attached 时只等节点挂树（不等完全可见），配合模板 clickWaitForState 用于侧栏等抢先点击。
     分页 / portal 下拉可模板设 skipScrollIntoView 跳过滚动。"""
     last_err = ""
-    wv = max(1000, min(int(wait_visible_ms or 10000), 600000))
+    st = (wait_for_state or "visible").strip().lower()
+    if st not in ("visible", "attached"):
+        st = "visible"
+    try:
+        raw_ms = int(wait_visible_ms)
+    except (TypeError, ValueError):
+        raw_ms = 2500 if st == "attached" else 10000
+    if st == "attached":
+        wv = max(200, min(raw_ms, 600000))
+    else:
+        wv = max(1000, min(raw_ms, 600000))
     for sel in selectors:
         sx = (sel or "").strip()
         if not sx:
             continue
         try:
             loc = _locator_nth_match(page, sx, match_idx)
-            loc.wait_for(state="visible", timeout=wv)
+            loc.wait_for(state=st, timeout=wv)
             if not skip_scroll_into_view:
                 # 滚入与「可见等待」对齐，避免 wv=1100 时 sc 仍卡 4000ms 却等不到节点
                 sc_to = max(6000, min(max(wv, 5000), 25000))
@@ -6408,6 +6574,7 @@ def _play_interactions_and_fields(
     _try_dismiss_unexpected_overlays(page)
     dl_prefix = _sanitize_filename_prefix(download_filename_prefix or acct)
     ran_any_interaction = False
+    quick_exit_page = False
     vis_cap = _visible_cap_ms(args)
     dl_cap = _download_cap_ms(args)
     soft = _page_soft_fail_enabled(page_cfg)
@@ -6464,6 +6631,17 @@ def _play_interactions_and_fields(
                         edl = _resolve_export_download_timeout_ms(
                             step if isinstance(step, dict) else {}, 60000, dl_cap
                         )
+                        # 可选下载（如 PDD「下载查询订单」）在无符合条件数据时通常不会触发浏览器下载。
+                        # 这类步骤不应等满长超时：默认仅等待 5 秒后按 optionalDownload 分支跳过。
+                        if isinstance(step, dict) and bool(step.get("optionalDownload")):
+                            try:
+                                no_file_wait_ms = int(
+                                    step.get("optionalDownloadNoFileWaitMs") or 5000
+                                )
+                            except (TypeError, ValueError):
+                                no_file_wait_ms = 5000
+                            no_file_wait_ms = max(1000, min(no_file_wait_ms, 30000))
+                            edl = min(edl, no_file_wait_ms)
                         try:
                             ef_retry_wait = int(step.get("exportFailRetryWaitMs") or 0)
                         except (TypeError, ValueError):
@@ -6643,17 +6821,38 @@ def _play_interactions_and_fields(
                             )
                         ok = eff_ok
                     else:
-                        cwv = _cap_visible_ms(step.get("waitVisibleTimeoutMs"), 10000, vis_cap)
                         skip_sv = bool(
                             (step.get("skipScrollIntoView") if isinstance(step, dict) else None)
                             or (step.get("noScrollBeforeClick") if isinstance(step, dict) else None)
                         )
+                        st_click = str(
+                            (step.get("clickWaitForState") if isinstance(step, dict) else None)
+                            or ""
+                        ).strip().lower()
+                        if st_click not in ("visible", "attached"):
+                            st_click = "visible"
+                        if st_click == "attached":
+                            try:
+                                raw_att = int((step.get("waitVisibleTimeoutMs") if isinstance(step, dict) else None) or 2500)
+                            except (TypeError, ValueError):
+                                raw_att = 2500
+                            raw_att = max(200, min(raw_att, 600000))
+                            cwv = raw_att
+                            if vis_cap > 0:
+                                cwv = min(cwv, vis_cap)
+                        else:
+                            cwv = _cap_visible_ms(
+                                step.get("waitVisibleTimeoutMs") if isinstance(step, dict) else None,
+                                10000,
+                                vis_cap,
+                            )
                         ok, detail = _click_selector_chain(
                             page,
                             click_sels if click_sels else [s for s in (sel, alt) if (s or "").strip()],
                             cwv,
                             _step_match_index(step if isinstance(step, dict) else {}),
                             skip_scroll_into_view=skip_sv,
+                            wait_for_state=st_click,
                         )
                         rows.append(
                             _result_row(
@@ -6899,6 +7098,64 @@ def _play_interactions_and_fields(
                         except Exception:
                             pass
 
+                elif stype == "reload":
+                    step_key = str(step.get("key") or key)
+                    try:
+                        rw_to = int(step.get("reloadTimeoutMs") or 90000)
+                    except (TypeError, ValueError):
+                        rw_to = 90000
+                    rw_to = max(3000, min(rw_to, 300000))
+                    wait_until = str(step.get("reloadWaitUntil") or "domcontentloaded").strip()
+                    if wait_until not in ("commit", "domcontentloaded", "load", "networkidle"):
+                        wait_until = "domcontentloaded"
+                    ok = True
+                    detail = f"wait_until={wait_until}, timeout={rw_to}"
+                    # reload 触发网络请求前先 arm；仅采纳本步之后的第一条匹配响应
+                    _network_capture_arm_if_step_matches(
+                        page_cfg, network_capture_store, step_key
+                    )
+                    try:
+                        page.reload(wait_until=wait_until, timeout=rw_to)
+                    except Exception as e:
+                        ok = False
+                        detail = str(e)
+                    rows.append(
+                        _result_row(
+                            page_id=pid,
+                            account=acct,
+                            phase="interaction",
+                            key=step_key,
+                            action="reload",
+                            detail=detail,
+                            ok=ok,
+                        )
+                    )
+                    if not ok:
+                        if soft:
+                            _soft_fail_fill_remaining_fields(
+                                data_rows=data_rows,
+                                rows=rows,
+                                fields=fields,
+                                acct=acct,
+                                pid=pid,
+                                placeholder=ph,
+                                reason=f"reload 失败: {detail}",
+                                already_have=set(),
+                            )
+                            return
+                        if isinstance(step, dict) and bool(step.get("continueOnFail")):
+                            continue
+                        _abort_on_step_fail(args, pid, acct, step_key, "reload", str(detail))
+                    try:
+                        prw = int(step.get("postReloadWaitMs") or 0)
+                    except (TypeError, ValueError):
+                        prw = 0
+                    if ok and prw > 0:
+                        try:
+                            page.wait_for_timeout(min(prw, 600000))
+                        except Exception:
+                            pass
+
                 elif stype == "dateRange":
                     tgt = step.get("target") or {}
                     sel = str((tgt.get("selector") if isinstance(tgt, dict) else "") or "")
@@ -7081,8 +7338,47 @@ def _play_interactions_and_fields(
                         stype or "unknown",
                         "未识别的 interaction.type",
                     )
+                if _should_quick_exit_page_after_network_capture(
+                    page_cfg, network_capture_store
+                ):
+                    rows.append(
+                        _result_row(
+                            page_id=pid,
+                            account=acct,
+                            phase="interaction",
+                            key="network_capture_quick_exit",
+                            action="quickExit",
+                            detail="命中 networkResponseCapture.quickExitPageOnCaptured，跳过本页后续步骤与字段",
+                            ok=True,
+                        )
+                    )
+                    quick_exit_page = True
+                    break
+            if quick_exit_page:
+                break
             if not _pdd_mod_need_another_pass:
                 break
+
+    if quick_exit_page:
+        _quick_exit_extract_network_fields(
+            page_cfg=page_cfg if isinstance(page_cfg, dict) else None,
+            store=network_capture_store if isinstance(network_capture_store, dict) else None,
+            fields=fields if isinstance(fields, list) else None,
+            data_rows=data_rows,
+            rows=rows,
+            acct=acct,
+            pid=pid,
+            yday=yday,
+        )
+        _maybe_save_network_capture_response(
+            page_cfg if isinstance(page_cfg, dict) else None,
+            network_capture_store if isinstance(network_capture_store, dict) else None,
+            network_json_dir,
+            yday,
+            pid,
+            acct,
+        )
+        return
 
     if (
         ran_any_interaction

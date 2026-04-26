@@ -8,19 +8,19 @@
     "选择器来自 Chrome Copy selector，含大量 nth-child 与哈希类名（如 -J7jCZG、style_*__3rYw_），发版或菜单增删后易失效；稳定后可改为短选择器、文案、getByRole。",
     "三个子域需分别登录；运行层需携带对应 Cookie。",
     "日期策略「前一天」指业务日还是自然日，请在实现时与页面控件行为对齐（含时区）。",
-    "抖店左侧栏依赖 nth-child(4)/(8)：账号权限、菜单折叠、新增菜单项都会导致序号变化，运行前建议在目标账号上回归点一次。",
+    "抖店左侧栏依赖 nth-child：「常用」多为第 2 项、「资金」多为第 9 项；账号权限、菜单折叠、新增菜单项都会导致序号变化，运行前建议在目标账号上回归点一次。",
     "globalAccountLoop：填 accounts 或命令行 --global-accounts 后，每家店先抖店首页切店，再按 pageIds 顺序跑各页 interactions+fields；这些 page id 在下方 pages 里仍会跳过重复执行，除非从 pageIds 中移除。",
     "globalAccountLoop.accounts 可为字符串数组，或 { name, shopId, 千川ID } 对象数组；脚本用 name 在抖店首页切店。若模板中任一条配置了非空「千川ID」（或 qianchuanId），则启用千川按 ID 切户：有 ID 的店在千川页用该 ID 切换；未配千川 ID 的店跳过千川导航/切户，Excel 对应指标写为字符串 None。若无人配置千川 ID，则千川仍按店铺名切换（兼容旧模板）。",
     "分块验证切店：python scripts/run_template_trial.py --only-account-switch（仅用 globalAccountLoop 的 URL+切店配置+accounts，不跑 pageIds）。",
-    "资金账单页点「生成报表」并在 popover 内「确定」后常跳转 fxg-bill/history-report，故「资金账单」与「历史报表下载」拆成两页；`fxg_aftersale_fund_detail_bill` 使用直达 URL `/ffa/fxg-bill/fund-detail-bill`（当前标签页 goto，不经售后侧栏）。售后订单导出另页 fxg_aftersale_order_list_export，避免跳转后后续点击失效。",
+    "资金账单与历史下载在业务上算同一环节（生成后常跳到 history-report，下载依赖上一步）；技术上仍为两个 page id，且 pageIds 内二者紧相邻：先 fxg_aftersale_fund_detail_bill 再 fxg_bill_history_report，其后才是罗盘等。资金账单页 url 与 preSwitchUrl 同为抖店首页，侧栏资金→账单管理进 fund-detail-bill，再选日、生成、确定。售后导出仍单列 fxg_aftersale_order_list_export。",
     "多店只测售后导出：python scripts/run_template_trial.py --global-accounts 店A,店B --page-ids fxg_aftersale_order_list_export（仍走首页 preSwitchUrl 切店，仅执行该页）；店名与 globalAccountLoop.accounts 一致或 CLI 覆盖。全量多店：不配 --page-ids，按 pageIds 顺序含账单→历史→售后等。",
     "历史报表「首条下载」分块单测（建议纳入日常调试/回归）：scripts/run_bill_history_download_test.py（或 .bat），模板 doc/scrape-template-fxg-bill-history-download-test.json；须与 pages 里 fxg_bill_history_report 的 export 一步保持同步。奏效原因：全量流程要先跑资金账单生成、长等待与多页顺序，为调 XPath/角色/下载超时往往要等整段；单测只执行该页并默认压低页末 post-interaction 空等，迭代从「几分钟一轮」缩到「几十秒一轮」；仍走同一 CDP 登录态与 run_template_trial 引擎，行为与全量一致，不是另一套假环境；小模板验证通过后再改主模板，减少对其它页的连带风险。",
-    "pageIds 顺序：首条为 fxg_mshop_home（切店后 goto https://compass.jinritemai.com/shop，再顶栏日期筛选后抽指标区；不再经抖店顶栏点进罗盘）；切店仍在 globalAccountLoop.preSwitchUrl 抖店首页完成。其后资金账单→历史报表→售后导出→千川。",
-    "运行流程（逐步人话：A～F、含千川 F1a 关推广弹窗）见 doc/抖店生态试运行-运行流程.md；与本文 notes、pages[].description 需同步维护。",
-    "千川页 qianchuan_home_cost_roi：切户（loginShopList 或 fallback 顶部搜索）后常出现推广/活动类弹窗或蒙层；与流程文档 F1a 对应。本页 dismissBlockingOverlaysBeforeFields 默认 true：在 dateRange 与 extract fields 之前脚本会尝试关闭此类遮挡，避免挡日期与指标；仍失败时可人工关闭后重跑或加大等待。",
+    "pageIds 顺序：切店后首条 fxg_aftersale_fund_detail_bill，紧接 fxg_bill_history_report（同一资金环节）；再 fxg_mshop_home（罗盘）→售后导出→千川。",
+    "运行流程（环节代号与脚本失败汇总一致：A 罗盘、B 资金两页、C 售后、D 千川；含千川 D1a 关推广弹窗）见 doc/抖店生态试运行-运行流程.md；与本文 notes、pages[].description 需同步维护。",
+    "千川页 qianchuan_home_cost_roi：切户后常出现推广/活动类弹窗或蒙层；与流程文档 D1a 对应。本页 dismissBlockingOverlaysBeforeFields 默认 true：在 dateRange 与 extract fields 之前脚本会尝试关闭此类遮挡，避免挡日期与指标；仍失败时可人工关闭后重跑或加大等待。",
     "千川自动重试（run_template_trial）：仅当模板中至少一条账户配置了千川 ID（启用 ID 策略）且当前店铺有非空千川 ID 时，若整页失败或三个成本指标未全部写入有效数据，可重试；额外次数由 pages[].qianchuanRetryExtra 指定（默认 0 不重试）、间隔见脚本 _QIANCHUAN_RETRY_WAIT_MS；未配置千川 ID 的店仍整页跳过写 None。",
     "命令行 --global-accounts / --page-ids / --checkpoint 等不改变单店内 pageIds 顺序，仅影响跑哪些店、哪些页；断点续跑须与同一模板意图一致。",
-    "run_template_trial：--selector-hints-file（默认 log/field_selector_hints.json）按「模板文件名::pageId::fieldKey::店铺名」记录上次 extract 成功的选择器（每家店独立优先级），下次运行插入候选链最前；--no-selector-hints 禁用。与 alternateFieldSelector 叠加时，记忆优先于模板内顺序。",
+    "run_template_trial：interactions 里 click 可选 clickWaitForState=attached（仅 wait_for attached，不等 visible）；waitVisibleTimeoutMs 在 attached 下表示挂树超时（可低至 200ms）。--selector-hints-file（默认 log/field_selector_hints.json）按「模板文件名::pageId::fieldKey::店铺名」记录上次 extract 成功的选择器；--no-selector-hints 禁用。",
     "模板根 runOutputSubdir：留空则默认落在项目 output/（采集 Excel 为 template_trial_{run_ts}.xlsx，按 run_ts 区分）；若需按批次分子目录可填如 mybatch_{run_ts}。控制台试运行会传 --run-root 指向「本批输出」文件夹，与此前缀无关。仍可用 --excel-out / --download-dir 覆盖。",
     "客户交付 dailydate：采集表复制 + 浏览器下载目录打 zip，整理到项目根 dailydate/<运行日>_<runOutputSubdir>_<run_ts>/。内置抖店控制台配置(app/config_registry/builtin_configs.json douyin_*)含 default_trial_args 注入 --package-dailydate-at-end；Streamlit 完整流程若启用 client_deliverable 则试运行阶段会去掉该参数，仅在后处理之后执行 package_dailydate_deliverable。纯命令行须试运成功结束才会打包；亦可手动 python scripts/package_dailydate_deliverable.py …。若有单独后处理，须在后处理完成后再打包。",
     "compassMetricsOutputPath 支持占位符：{run_ts}（推荐，每次运行唯一）、{yday}（统计昨日 YYYY-MM-DD）、{yday_compact}、{run_day}，避免每日覆盖同一文件。",
@@ -34,7 +34,7 @@
     "accountsConfigFile": "doc/douyin-account-packs/v1_main.json",
     "accountsProfile": "default",
     "preSwitchUrl": "https://fxg.jinritemai.com/ffa/mshop/homepage/index",
-    "anchorPageId": "fxg_mshop_home",
+    "anchorPageId": "fxg_aftersale_fund_detail_bill",
     "accountSwitcher": {
       "mode": "fxgShopModal",
       "headerMenuHoverSelector": [
@@ -58,9 +58,9 @@
       ]
     },
     "pageIds": [
-      "fxg_mshop_home",
       "fxg_aftersale_fund_detail_bill",
       "fxg_bill_history_report",
+      "fxg_mshop_home",
       "fxg_aftersale_order_list_export",
       "qianchuan_home_cost_roi"
     ]
@@ -108,7 +108,8 @@
           "type": "click",
           "key": "fxg_home_close_desktop_ad",
           "continueOnFail": true,
-          "waitVisibleTimeoutMs": 3500,
+          "clickWaitForState": "attached",
+          "waitVisibleTimeoutMs": 800,
           "postClickWaitMs": 200,
           "skipScrollIntoView": true,
           "target": {
@@ -124,7 +125,7 @@
             "div[role='dialog'] button:has-text('关闭')",
             "div[role='dialog'] .auxo-modal-close-x"
           ],
-          "comment": "首页可能出现桌面广告/运营提醒弹窗；若出现先尝试关闭，不出现则继续。"
+          "comment": "罗盘页偶发弹窗；clickWaitForState=attached + 短超时，无弹窗时尽快换候选并结束。"
         }
       ],
       "fields": [
@@ -233,8 +234,8 @@
     },
     {
       "id": "fxg_aftersale_fund_detail_bill",
-      "url": "https://fxg.jinritemai.com/ffa/fxg-bill/fund-detail-bill",
-      "postGotoWaitMs": 1000,
+      "url": "https://fxg.jinritemai.com/ffa/mshop/homepage/index",
+      "postGotoWaitMs": 1500,
       "preSwitchUrl": "",
       "runAccounts": [],
       "accountSwitcher": {
@@ -260,12 +261,92 @@
         ]
       },
       "kind": "detail",
-      "description": "抖店资金账单：当前标签页直达 `/ffa/fxg-bill/fund-detail-bill`（账单管理），无需售后侧栏点击。随后选日期、生成报表、popover 确定。确定步 `postClickWaitMs` 可为 0（仅去掉脚本固定睡眠，与是否出现弹层无关）。确认后常跳转 history-report，下载在下一页 fxg_bill_history_report。",
+      "description": "抖店资金账单环节·第1段：切店后仍在抖店首页（与 preSwitchUrl 一致时可 skip_same_url）；侧栏父级为 #app-main … > style_left-side-bar__2OzUz > div > div，其下常用/资金/账单管理三步 click 使用 clickWaitForState=attached（仅等 DOM 挂树，不等主内容区完全可见）+ skipScrollIntoView。选日、生成、popover 确定。与下一页 fxg_bill_history_report 同一业务环节。",
       "scope": {
         "listRoot": "",
         "itemRoot": ""
       },
       "interactions": [
+        {
+          "order": -4,
+          "type": "click",
+          "key": "fxg_fund_nav_close_home_modal",
+          "continueOnFail": true,
+          "clickWaitForState": "attached",
+          "waitVisibleTimeoutMs": 800,
+          "postClickWaitMs": 200,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "div.auxo-modal-wrap button.auxo-modal-close"
+          },
+          "alternateClickSelector": [
+            "div.auxo-modal-wrap .auxo-modal-close-x",
+            "div.auxo-modal-wrap button:has-text('关闭')",
+            "div.auxo-modal-wrap button:has-text('我知道了')",
+            "div.auxo-modal-wrap button:has-text('暂不')",
+            "div.auxo-modal-wrap button:has-text('跳过')"
+          ],
+          "comment": "抖店首页偶发运营弹窗；attached + 短超时，无弹窗时少占日志。"
+        },
+        {
+          "order": -3,
+          "type": "click",
+          "key": "fxg_fund_nav_expand_common_shortcuts",
+          "continueOnFail": true,
+          "clickWaitForState": "attached",
+          "waitVisibleTimeoutMs": 2000,
+          "postClickWaitMs": 400,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "#app-main > div.style_container-responsive__3rYw_.styles_responsive-wrapper__1qtNL > div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(2)"
+          },
+          "alternateClickSelector": [
+            "#app-main div[class*='style_left-side-bar'] > div > div > div > div > div:nth-child(2)",
+            "#app-main div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(2)"
+          ],
+          "comment": "左侧栏父级 … > style_left-side-bar__2OzUz > div > div 下「常用」分组；clickWaitForState=attached 仅等挂树、不等整页完全可见；已展开则 continueOnFail。"
+        },
+        {
+          "order": -2,
+          "type": "click",
+          "key": "fxg_fund_nav_expand_funds_group",
+          "continueOnFail": true,
+          "clickWaitForState": "attached",
+          "waitVisibleTimeoutMs": 2000,
+          "postClickWaitMs": 500,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "#app-main > div.style_container-responsive__3rYw_.styles_responsive-wrapper__1qtNL > div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(9)"
+          },
+          "alternateClickSelector": [
+            "#app-main div[class*='style_left-side-bar'] > div > div > div > div > div:nth-child(9)",
+            "#app-main div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(9)"
+          ],
+          "comment": "左侧「资金」分组；同上 attached，不等主内容区加载完。"
+        },
+        {
+          "order": -1,
+          "type": "click",
+          "key": "fxg_fund_nav_click_bill_management",
+          "clickWaitForState": "attached",
+          "waitVisibleTimeoutMs": 2500,
+          "postClickWaitMs": 1200,
+          "skipScrollIntoView": true,
+          "target": {
+            "selector": "#app-main > div.style_container-responsive__3rYw_.styles_responsive-wrapper__1qtNL > div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(2) a:has-text('账单管理')"
+          },
+          "alternateClickSelector": [
+            "#app-main div[class*='style_left-side-bar'] > div > div > div > div > div:nth-child(2) div:last-child a:has-text('账单管理')",
+            "#app-main div[class*='style_left-side-bar'] > div > div > div > div > div:nth-child(2) a:has-text('账单管理')",
+            "#app-main > div.style_container-responsive__3rYw_.styles_responsive-wrapper__1qtNL > div.style_left-side-bar__2OzUz > div > div > div > div > div:nth-child(9) a:has-text('账单管理')",
+            "#app-main div[class*='style_left-side-bar'] > div > div > div > div > div:nth-child(9) a:has-text('账单管理')",
+            "#app-main div[class*='style_left-side-bar'] a:has-text('账单管理')",
+            "#app-main > div.style_container-responsive__3rYw_.styles_responsive-wrapper__1qtNL > div.style_left-side-bar__2OzUz a:has-text('账单管理')",
+            "div.style_left-side-bar__2OzUz a:has-text('账单管理')",
+            "#app-main a:has-text('账单管理')"
+          ],
+          "comment": "优先常用区内「账单管理」；候选含常用区末级容器、资金分组下链接及侧栏兜底。"
+        },
         {
           "order": 0,
           "type": "dateRange",
@@ -332,7 +413,7 @@
         ]
       },
       "kind": "detail",
-      "description": "历史报表列表多行结构相同。「第一条」= 第一个 li 内「下载」。生成中：preExport 每轮 preExportReadyTimeoutMs 内轮询；超时则刷新，最多 preExportRefreshMax 次（当前为 2 次）。仍见不到下载控件则本步失败。不再做「整页 exportFail」第二轮：exportFailRetryWaitMs=0、exportFailAttemptMax=1。失败时 continueOnFail 跳过本步，继续后续页面。",
+      "description": "资金账单环节·第2段（与上一页 `fxg_aftersale_fund_detail_bill` 算同一业务环节，紧接执行）：历史报表列表「第一条」下载。生成中：preExport 轮询与刷新见模板参数；失败时 continueOnFail 跳过本步。",
       "scope": { "listRoot": "", "itemRoot": "" },
       "interactions": [
         {

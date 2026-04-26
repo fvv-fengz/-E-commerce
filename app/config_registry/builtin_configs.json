@@ -136,9 +136,9 @@
     "template": "doc/scrape-template-jinritemai-v1.json",
     "module_page_ids": [
       "fxg_login_switch",
-      "fxg_mshop_home",
       "fxg_aftersale_fund_detail_bill",
       "fxg_bill_history_report",
+      "fxg_mshop_home",
       "fxg_aftersale_order_list_export",
       "qianchuan_home_cost_roi"
     ],
